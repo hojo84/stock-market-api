@@ -3,7 +3,7 @@ package com.codecool.stockmarketapi.model;
 import lombok.Data;
 
 @Data
-public class IndexComponents {
+public class IndexComponent {
 
     private Long id;
     private Long indexId;
