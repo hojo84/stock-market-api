@@ -11,9 +11,9 @@ public class Trading {
     private String exchangeId;
     private String stockId;
     private LocalDate tradingDay;
-    private int priceOpen;
-    private int priceHigh;
-    private int priceLow;
-    private int priceClose;
+    private float priceOpen;
+    private float priceHigh;
+    private float priceLow;
+    private float priceClose;
     private int volume;
 }
