@@ -6,6 +6,6 @@ import lombok.Data;
 public class Listing {
 
     private Long id;
-    private String exchangeId;
-    private String stockId;
+    private Long exchangeId;
+    private Long stockId;
 }

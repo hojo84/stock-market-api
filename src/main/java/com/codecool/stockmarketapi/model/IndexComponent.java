@@ -7,6 +7,6 @@ public class IndexComponent {
 
     private Long id;
     private Long indexId;
-    private String stockId;
+    private Long stockId;
     private float stockWeight;
 }

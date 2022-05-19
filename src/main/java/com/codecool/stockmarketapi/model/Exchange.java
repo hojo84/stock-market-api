@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class Exchange {
 
-    private String id;
+    private Long id;
+    private String marketIdentifierCode;
     private String name;
     private Long countryId;
     private String location;
