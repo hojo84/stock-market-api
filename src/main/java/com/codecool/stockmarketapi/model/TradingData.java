@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public class TradingData {
 
     private Long id;
-    private String exchangeId;
-    private String stockId;
+    private Long exchangeId;
+    private Long stockId;
     private LocalDate tradingDay;
     private float priceOpen;
     private float priceHigh;
