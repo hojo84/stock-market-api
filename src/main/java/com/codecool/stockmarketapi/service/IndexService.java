@@ -37,15 +37,19 @@ public class IndexService {
         genericCrudDAO.deleteById(id);
     }
 
-    public List<IndexComponent> getAllComponentsByIndexId(Long id) {
-        return indexDAO.getAllComponentsByIndexId(id);
+    public Index getIndexBySymbol(String symbol) {
+        return indexDAO.getIndexBySymbol(symbol);
+    }
+
+    public List<IndexComponent> getAllComponentsByIndexId(String symbol) {
+        return indexDAO.getAllComponentsByIndexId(symbol);
     }
 
     public void addStockToIndex(IndexComponent indexComponent) {
         indexDAO.addStockToIndex(indexComponent);
     }
 
-    public void removeStockFromIndex(String stockId, Long indexId) {
-        indexDAO.removeStockFromIndex(stockId, indexId);
+    public void removeStockFromIndex(String stockTicker, Long indexSymbol) {
+        indexDAO.removeStockFromIndex(stockTicker, indexSymbol);
     }
 }
