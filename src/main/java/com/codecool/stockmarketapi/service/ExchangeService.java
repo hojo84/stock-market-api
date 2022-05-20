@@ -40,19 +40,23 @@ public class ExchangeService {
         genericCrudDAO.deleteById(id);
     }
 
-    public List<Index> getAllIndicesByExchangeId(String id) {
-        return exchangeDAO.getAllIndicesByExchangeId(id);
+    public Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode) {
+        return exchangeDAO.getExchangeByMarketIdentifierCode(marketIdentifierCode);
     }
 
-    public List<Stock> getAllStocksByExchangeId(String id) {
-        return exchangeDAO.getAllStocksByExchangeId(id);
+    public List<Index> getAllIndicesByExchangeCode(String marketIdentifierCode) {
+        return exchangeDAO.getAllIndicesByExchangeCode(marketIdentifierCode);
     }
 
-    public Stock getStockByIdOnGivenExchange(String exchangeId, String stockId) {
-        return exchangeDAO.getStockByIdOnGivenExchange(exchangeId, stockId);
+    public List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode) {
+        return exchangeDAO.getAllStocksByExchangeCode(marketIdentifierCode);
     }
 
-    public TradingData getTradingDataByStockIdOnGivenExchangeAndDate(String exchangeId, String stockId, LocalDate tradingDay) {
-        return exchangeDAO.getTradingDataByStockIdOnGivenExchangeAndDate(exchangeId, stockId, tradingDay);
+    public Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker) {
+        return exchangeDAO.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
+    }
+
+    public TradingData getTradingDataByStockTickerOnGivenExchangeAndDate(String marketIdentifierCode, String stockTicker, LocalDate tradingDay) {
+        return exchangeDAO.getTradingDataByStockTickerOnGivenExchangeAndDate(marketIdentifierCode, stockTicker, tradingDay);
     }
 }
