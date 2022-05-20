@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.dao;
 
+import com.codecool.stockmarketapi.model.Exchange;
 import com.codecool.stockmarketapi.model.Index;
 import com.codecool.stockmarketapi.model.Stock;
 import com.codecool.stockmarketapi.model.TradingData;
@@ -9,11 +10,13 @@ import java.util.List;
 
 public interface ExchangeDAO {
 
-    List<Index> getAllIndicesByExchangeId(String id);
+    Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode);
 
-    List<Stock> getAllStocksByExchangeId(String id);
+    List<Index> getAllIndicesByExchangeCode(String marketIdentifierCode);
 
-    Stock getStockByIdOnGivenExchange(String exchangeId, String stockId);
+    List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode);
 
-    TradingData getTradingDataByStockIdOnGivenExchangeAndDate(String exchangeId, String stockId, LocalDate tradingDay);
+    Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker);
+
+    TradingData getTradingDataByStockTickerOnGivenExchangeAndDate(String marketIdentifierCode, String stockTicker, LocalDate tradingDay);
 }

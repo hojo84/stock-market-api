@@ -37,7 +37,11 @@ public class StockService {
         genericCrudDAO.deleteById(id);
     }
 
-    public List<Index> getAllIndicesIncludingGivenStockById(String stockId) {
-        return stockDAO.getAllIndicesIncludingGivenStockById(stockId);
+    public Stock getStockByTicker(String ticker) {
+        return stockDAO.getStockByTicker(ticker);
+    }
+
+    public List<Index> getAllIndicesIncludingGivenStockByTicker(String ticker) {
+        return stockDAO.getAllIndicesContainingGivenStockByTicker(ticker);
     }
 }
