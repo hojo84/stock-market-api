@@ -41,7 +41,7 @@ public class StockService {
         return stockDAO.getStockByTicker(ticker);
     }
 
-    public List<Index> getAllIndicesIncludingGivenStockByTicker(String ticker) {
+    public List<Index> getAllIndicesContainingGivenStockByTicker(String ticker) {
         return stockDAO.getAllIndicesContainingGivenStockByTicker(ticker);
     }
 }
