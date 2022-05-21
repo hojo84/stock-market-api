@@ -49,7 +49,7 @@ public class IndexService {
         indexDAO.addStockToIndex(indexComponent);
     }
 
-    public void removeStockFromIndex(String stockTicker, Long indexSymbol) {
+    public void removeStockFromIndex(String stockTicker, String indexSymbol) {
         indexDAO.removeStockFromIndex(stockTicker, indexSymbol);
     }
 }

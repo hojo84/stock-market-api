@@ -13,5 +13,5 @@ public interface IndexDAO {
 
     void addStockToIndex(IndexComponent indexComponent);
 
-    void removeStockFromIndex(String stockTicker, Long indexSymbol);
+    void removeStockFromIndex(String stockTicker, String indexSymbol);
 }
