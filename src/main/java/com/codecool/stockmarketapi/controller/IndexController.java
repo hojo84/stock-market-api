@@ -51,8 +51,8 @@ public class IndexController {
     }
 
     @GetMapping("/{symbol}/components")
-    public List<IndexComponent> getAllComponentsByIndexId(@PathVariable("symbol") String symbol) {
-        return indexService.getAllComponentsByIndexId(symbol);
+    public List<IndexComponent> getAllComponentsByIndexSymbol(@PathVariable("symbol") String symbol) {
+        return indexService.getAllComponentsByIndexSymbol(symbol);
     }
 
     @PostMapping("/components")

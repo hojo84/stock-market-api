@@ -34,8 +34,8 @@ public class IndexService {
         return indexDAO.getIndexBySymbol(symbol);
     }
 
-    public List<IndexComponent> getAllComponentsByIndexId(String symbol) {
-        return indexDAO.getAllComponentsByIndexId(symbol);
+    public List<IndexComponent> getAllComponentsByIndexSymbol(String symbol) {
+        return indexDAO.getAllComponentsByIndexSymbol(symbol);
     }
 
     public void addStockToIndex(IndexComponent indexComponent) {

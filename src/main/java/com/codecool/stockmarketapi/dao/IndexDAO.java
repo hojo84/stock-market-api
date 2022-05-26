@@ -9,7 +9,7 @@ public interface IndexDAO {
 
     Index getIndexBySymbol(String symbol);
 
-    List<IndexComponent> getAllComponentsByIndexId(String symbol);
+    List<IndexComponent> getAllComponentsByIndexSymbol(String symbol);
 
     void addStockToIndex(IndexComponent indexComponent);
 
