@@ -6,7 +6,6 @@ import com.codecool.stockmarketapi.model.Exchange;
 import com.codecool.stockmarketapi.model.Index;
 import com.codecool.stockmarketapi.model.Stock;
 import com.codecool.stockmarketapi.model.TradingData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,14 +14,8 @@ import java.util.List;
 @Service
 public class ExchangeService {
 
-    private final GenericCrudDAO<Exchange> genericCrudDAO;
-    private final ExchangeDAO exchangeDAO;
-
-    @Autowired
-    public ExchangeService(GenericCrudDAO<Exchange> genericCrudDAO, ExchangeDAO exchangeDAO) {
-        this.genericCrudDAO = genericCrudDAO;
-        this.exchangeDAO = exchangeDAO;
-    }
+    private GenericCrudDAO<Exchange> genericCrudDAO;
+    private ExchangeDAO exchangeDAO;
 
     public List<Exchange> listAll() {
         return genericCrudDAO.listAll();

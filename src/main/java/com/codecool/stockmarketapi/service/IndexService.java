@@ -4,7 +4,6 @@ import com.codecool.stockmarketapi.dao.GenericCrudDAO;
 import com.codecool.stockmarketapi.dao.IndexDAO;
 import com.codecool.stockmarketapi.model.Index;
 import com.codecool.stockmarketapi.model.IndexComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +11,8 @@ import java.util.List;
 @Service
 public class IndexService {
 
-    private final GenericCrudDAO<Index> genericCrudDAO;
-    private final IndexDAO indexDAO;
-
-    @Autowired
-    public IndexService(GenericCrudDAO<Index> genericCrudDAO, IndexDAO indexDAO) {
-        this.genericCrudDAO = genericCrudDAO;
-        this.indexDAO = indexDAO;
-    }
+    private GenericCrudDAO<Index> genericCrudDAO;
+    private IndexDAO indexDAO;
 
     public List<Index> listAll() {
         return genericCrudDAO.listAll();
@@ -41,15 +34,15 @@ public class IndexService {
         return indexDAO.getIndexBySymbol(symbol);
     }
 
-    public List<IndexComponent> getAllComponentsByIndexId(String symbol) {
-        return indexDAO.getAllComponentsByIndexId(symbol);
+    public List<IndexComponent> getAllComponentsByIndexSymbol(String symbol) {
+        return indexDAO.getAllComponentsByIndexSymbol(symbol);
     }
 
     public void addStockToIndex(IndexComponent indexComponent) {
         indexDAO.addStockToIndex(indexComponent);
     }
 
-    public void removeStockFromIndex(String stockTicker, Long indexSymbol) {
+    public void removeStockFromIndex(String stockTicker, String indexSymbol) {
         indexDAO.removeStockFromIndex(stockTicker, indexSymbol);
     }
 }

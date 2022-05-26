@@ -8,7 +8,7 @@ import com.codecool.stockmarketapi.model.TradingData;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface ExchangeDAO {
+public interface ExchangeDAO extends GenericCrudDAO<Exchange> {
 
     Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode);
 

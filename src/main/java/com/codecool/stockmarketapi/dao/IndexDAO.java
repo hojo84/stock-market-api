@@ -5,13 +5,13 @@ import com.codecool.stockmarketapi.model.IndexComponent;
 
 import java.util.List;
 
-public interface IndexDAO {
+public interface IndexDAO extends GenericCrudDAO<Index> {
 
     Index getIndexBySymbol(String symbol);
 
-    List<IndexComponent> getAllComponentsByIndexId(String symbol);
+    List<IndexComponent> getAllComponentsByIndexSymbol(String symbol);
 
     void addStockToIndex(IndexComponent indexComponent);
 
-    void removeStockFromIndex(String stockTicker, Long indexSymbol);
+    void removeStockFromIndex(String stockTicker, String indexSymbol);
 }
