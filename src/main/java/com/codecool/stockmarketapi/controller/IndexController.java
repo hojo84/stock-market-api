@@ -45,7 +45,7 @@ public class IndexController {
         indexService.deleteById(id);
     }
 
-    @GetMapping("/{symbol}")
+    @GetMapping("/symbols/{symbol}")
     public Index getIndexBySymbol(@PathVariable("symbol") String symbol) {
         return indexService.getIndexBySymbol(symbol);
     }

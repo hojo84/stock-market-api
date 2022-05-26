@@ -48,7 +48,7 @@ public class ExchangeController {
         exchangeService.deleteById(id);
     }
 
-    @GetMapping("/{mic}")
+    @GetMapping("/mic/{mic}")
     public Exchange getExchangeByMarketIdentifierCode(@PathVariable("mic") String marketIdentifierCode) {
         return exchangeService.getExchangeByMarketIdentifierCode(marketIdentifierCode);
     }
