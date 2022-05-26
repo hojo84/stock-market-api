@@ -6,6 +6,7 @@ import com.codecool.stockmarketapi.model.Stock;
 import com.codecool.stockmarketapi.model.TradingData;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -72,7 +73,7 @@ public class ExchangeController {
     @GetMapping("/{mic}/tickers/{stock_ticker}/trading/{date}")
     public TradingData getTradingDataByStockTickerOnGivenExchangeAndDate(@PathVariable("mic") String marketIdentifierCode,
                                                                          @PathVariable("stock_ticker") String stockTicker,
-                                                                         @PathVariable("date") LocalDate tradingDay) {
+                                                                         @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tradingDay) {
         return exchangeService.getTradingDataByStockTickerOnGivenExchangeAndDate(marketIdentifierCode, stockTicker, tradingDay);
     }
 }
