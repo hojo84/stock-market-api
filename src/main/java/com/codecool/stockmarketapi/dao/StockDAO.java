@@ -5,7 +5,7 @@ import com.codecool.stockmarketapi.model.Stock;
 
 import java.util.List;
 
-public interface StockDAO {
+public interface StockDAO extends GenericCrudDAO<Stock> {
 
     Stock getStockByTicker(String ticker);
 

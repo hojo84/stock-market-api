@@ -5,7 +5,7 @@ import com.codecool.stockmarketapi.model.IndexComponent;
 
 import java.util.List;
 
-public interface IndexDAO {
+public interface IndexDAO extends GenericCrudDAO<Index> {
 
     Index getIndexBySymbol(String symbol);
 

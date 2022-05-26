@@ -6,7 +6,7 @@ public interface GenericCrudDAO<T> {
 
     List<T> listAll();
 
-    Long save(T type);
+    Long save(T entity);
 
     T findById(Long id);
 
