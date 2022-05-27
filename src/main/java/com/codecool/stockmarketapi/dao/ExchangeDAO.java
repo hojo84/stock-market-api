@@ -1,9 +1,9 @@
 package com.codecool.stockmarketapi.dao;
 
-import com.codecool.stockmarketapi.model.Exchange;
-import com.codecool.stockmarketapi.model.Index;
-import com.codecool.stockmarketapi.model.Stock;
-import com.codecool.stockmarketapi.model.TradingData;
+import com.codecool.stockmarketapi.entity.Exchange;
+import com.codecool.stockmarketapi.entity.Index;
+import com.codecool.stockmarketapi.entity.Stock;
+import com.codecool.stockmarketapi.entity.TradingData;
 
 import java.time.LocalDate;
 import java.util.List;

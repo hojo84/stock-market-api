@@ -2,10 +2,10 @@ package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.dao.ExchangeDAO;
 import com.codecool.stockmarketapi.dao.GenericCrudDAO;
-import com.codecool.stockmarketapi.model.Exchange;
-import com.codecool.stockmarketapi.model.Index;
-import com.codecool.stockmarketapi.model.Stock;
-import com.codecool.stockmarketapi.model.TradingData;
+import com.codecool.stockmarketapi.entity.Exchange;
+import com.codecool.stockmarketapi.entity.Index;
+import com.codecool.stockmarketapi.entity.Stock;
+import com.codecool.stockmarketapi.entity.TradingData;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

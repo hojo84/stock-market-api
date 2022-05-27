@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.dao;
 
-import com.codecool.stockmarketapi.model.Index;
-import com.codecool.stockmarketapi.model.IndexComponent;
+import com.codecool.stockmarketapi.entity.Index;
+import com.codecool.stockmarketapi.entity.IndexComponent;
 
 import java.util.List;
 

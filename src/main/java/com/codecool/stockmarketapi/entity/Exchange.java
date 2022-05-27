@@ -1,4 +1,4 @@
-package com.codecool.stockmarketapi.model;
+package com.codecool.stockmarketapi.entity;
 
 import lombok.Data;
 
