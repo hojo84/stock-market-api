@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NaturalId
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
