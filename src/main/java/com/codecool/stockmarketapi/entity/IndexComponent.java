@@ -14,9 +14,11 @@ public class IndexComponent {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_index_components_indices"))
     private Index index;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_index_components_stocks"))
     private Stock stock;
 
     private float componentWeight;
