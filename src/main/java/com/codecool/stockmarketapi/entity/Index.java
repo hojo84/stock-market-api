@@ -21,6 +21,7 @@ public class Index {
     private String name;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_indices_exchanges"))
     private Exchange exchange;
 
     private int constituents;

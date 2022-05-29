@@ -22,6 +22,7 @@ public class Exchange {
     private String name;
 
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
     private Country country;
 
     private String location;
@@ -37,9 +38,9 @@ public class Exchange {
     @JoinTable(
             name = "listings",
             joinColumns = @JoinColumn(name = "exchange_id"),
-            foreignKey = @ForeignKey(name = "fk_exchange_stock"),
+            foreignKey = @ForeignKey(name = "fk_listings_exchanges"),
             inverseJoinColumns = @JoinColumn(name = "stock_id"),
-            inverseForeignKey = @ForeignKey(name = "fk_stock_exchange")
+            inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
     private List<Stock> stocks;
 
