@@ -1,4 +1,4 @@
-package com.codecool.stockmarketapi.dao;
+package com.codecool.stockmarketapi.repository;
 
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Index;

@@ -1,4 +1,4 @@
-package com.codecool.stockmarketapi.dao;
+package com.codecool.stockmarketapi.repository;
 
 import java.util.List;
 

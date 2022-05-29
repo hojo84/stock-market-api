@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.service;
 
-import com.codecool.stockmarketapi.dao.GenericCrudDAO;
-import com.codecool.stockmarketapi.dao.IndexDAO;
+import com.codecool.stockmarketapi.repository.GenericCrudDAO;
+import com.codecool.stockmarketapi.repository.IndexDAO;
 import com.codecool.stockmarketapi.entity.Index;
 import com.codecool.stockmarketapi.entity.IndexComponent;
 import org.springframework.stereotype.Service;
