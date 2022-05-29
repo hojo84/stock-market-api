@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.controller;
 
-import com.codecool.stockmarketapi.model.Index;
-import com.codecool.stockmarketapi.model.Stock;
+import com.codecool.stockmarketapi.entity.Index;
+import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
