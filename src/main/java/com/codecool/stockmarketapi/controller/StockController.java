@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/stocks")
@@ -25,18 +26,18 @@ public class StockController {
     }
 
     @PostMapping
-    public Long save(@RequestBody Stock stock) {
+    public Stock save(@RequestBody Stock stock) {
         return stockService.save(stock);
     }
 
     @PutMapping("/{id}")
-    public Long save(@PathVariable("id") Long id, @RequestBody Stock stock) {
+    public Stock update(@PathVariable("id") Long id, @RequestBody Stock stock) {
         stock.setId(id);
         return stockService.save(stock);
     }
 
     @GetMapping("/{id}")
-    public Stock findById(@PathVariable("id") Long id) {
+    public Optional<Stock> findById(@PathVariable("id") Long id) {
         return stockService.findById(id);
     }
 
