@@ -1,5 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.NaturalId;
 
@@ -9,6 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "countries")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Country {
 
     @Id

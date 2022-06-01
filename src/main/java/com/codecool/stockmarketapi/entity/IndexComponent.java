@@ -1,5 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "index_components")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class IndexComponent {
 
     @Id
