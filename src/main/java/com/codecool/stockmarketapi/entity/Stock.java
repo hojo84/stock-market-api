@@ -36,14 +36,14 @@ public class Stock {
     private EquityType equityType;
 
     @ManyToMany(mappedBy = "stocks")
-    @JsonBackReference("3")
+    @JsonManagedReference("3")
     private List<Exchange> exchanges;
 
     @OneToMany(mappedBy = "stock")
-    @JsonManagedReference("6")
+    @JsonBackReference("6")
     private List<IndexComponent> indexComponents;
 
     @OneToMany(mappedBy = "stock")
-    @JsonManagedReference("7")
+    @JsonBackReference("7")
     private List<TradingData> tradingData;
 }

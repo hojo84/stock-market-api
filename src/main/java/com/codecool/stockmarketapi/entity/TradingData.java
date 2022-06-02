@@ -1,6 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +23,12 @@ public class TradingData {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_exchanges"))
-    @JsonBackReference("4")
+    @JsonManagedReference("4")
     private Exchange exchange;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_stocks"))
-    @JsonBackReference("7")
+    @JsonManagedReference("7")
     private Stock stock;
 
     private LocalDate tradingDay;

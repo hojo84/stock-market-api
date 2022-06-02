@@ -1,6 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +26,6 @@ public class Country {
     private String name;
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-    @JsonManagedReference("1")
+    @JsonBackReference("1")
     private List<Exchange> exchanges;
 }

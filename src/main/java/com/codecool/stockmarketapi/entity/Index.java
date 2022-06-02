@@ -30,12 +30,12 @@ public class Index {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_indices_exchanges"))
-    @JsonBackReference("2")
+    @JsonManagedReference("2")
     private Exchange exchange;
 
     private int constituents;
 
     @OneToMany(mappedBy = "index")
-    @JsonManagedReference("5")
+    @JsonBackReference("5")
     private List<IndexComponent> indexComponents;
 }

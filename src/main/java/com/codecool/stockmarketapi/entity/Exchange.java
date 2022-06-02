@@ -31,7 +31,7 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
-    @JsonBackReference("1")
+    @JsonManagedReference("1")
     private Country country;
 
     private String location;
@@ -41,7 +41,7 @@ public class Exchange {
     private String website;
 
     @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
-    @JsonManagedReference("2")
+    @JsonBackReference("2")
     private List<Index> indices;
 
     @ManyToMany
@@ -52,10 +52,10 @@ public class Exchange {
             inverseJoinColumns = @JoinColumn(name = "stock_id"),
             inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
-    @JsonManagedReference("3")
+    @JsonBackReference("3")
     private List<Stock> stocks;
 
     @OneToMany(mappedBy = "exchange")
-    @JsonManagedReference("4")
+    @JsonBackReference("4")
     private List<TradingData> tradingData;
 }
