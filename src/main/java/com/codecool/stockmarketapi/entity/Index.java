@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "indices")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Index {
 
     @Id
@@ -31,10 +30,12 @@ public class Index {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_indices_exchanges"))
+    @JsonBackReference("2")
     private Exchange exchange;
 
     private int constituents;
 
     @OneToMany(mappedBy = "index")
+    @JsonManagedReference("5")
     private List<IndexComponent> indexComponents;
 }

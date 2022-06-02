@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "exchanges")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Exchange {
 
     @Id
@@ -32,6 +31,7 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
+    @JsonBackReference("1")
     private Country country;
 
     private String location;
@@ -41,6 +41,7 @@ public class Exchange {
     private String website;
 
     @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
+    @JsonManagedReference("2")
     private List<Index> indices;
 
     @ManyToMany
@@ -51,8 +52,10 @@ public class Exchange {
             inverseJoinColumns = @JoinColumn(name = "stock_id"),
             inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
+    @JsonManagedReference("3")
     private List<Stock> stocks;
 
     @OneToMany(mappedBy = "exchange")
+    @JsonManagedReference("4")
     private List<TradingData> tradingData;
 }

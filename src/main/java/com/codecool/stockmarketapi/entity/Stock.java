@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "stocks")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Stock {
 
     @Id
@@ -37,11 +36,14 @@ public class Stock {
     private EquityType equityType;
 
     @ManyToMany(mappedBy = "stocks")
+    @JsonBackReference("3")
     private List<Exchange> exchanges;
 
     @OneToMany(mappedBy = "stock")
+    @JsonManagedReference("6")
     private List<IndexComponent> indexComponents;
 
     @OneToMany(mappedBy = "stock")
+    @JsonManagedReference("7")
     private List<TradingData> tradingData;
 }

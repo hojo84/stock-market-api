@@ -1,7 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "trading_data")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TradingData {
 
     @Id
@@ -25,10 +23,12 @@ public class TradingData {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_exchanges"))
+    @JsonBackReference("4")
     private Exchange exchange;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_stocks"))
+    @JsonBackReference("7")
     private Stock stock;
 
     private LocalDate tradingDay;

@@ -1,7 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "index_components")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class IndexComponent {
 
     @Id
@@ -24,10 +22,12 @@ public class IndexComponent {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_index_components_indices"))
+    @JsonBackReference("5")
     private Index index;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_index_components_stocks"))
+    @JsonBackReference("6")
     private Stock stock;
 
     private float componentWeight;
