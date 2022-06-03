@@ -1,6 +1,5 @@
 package com.codecool.stockmarketapi.controller;
 
-import com.codecool.stockmarketapi.entity.Index;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +48,5 @@ public class StockController {
     @GetMapping("/tickers/{ticker}")
     public Stock getStockByTicker(@PathVariable("ticker") String ticker) {
         return stockService.getStockByTicker(ticker);
-    }
-
-    @GetMapping("/{ticker}/indices")
-    public List<Index> getAllIndicesIncludingGivenStockByTicker(@PathVariable("ticker") String ticker) {
-        return stockService.getAllIndicesContainingGivenStockByTicker(ticker);
     }
 }

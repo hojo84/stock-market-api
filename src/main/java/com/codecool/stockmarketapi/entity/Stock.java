@@ -1,6 +1,5 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,12 +37,4 @@ public class Stock {
     @ManyToMany(mappedBy = "stocks")
     @JsonManagedReference("3")
     private List<Exchange> exchanges;
-
-    @OneToMany(mappedBy = "stock")
-    @JsonBackReference("6")
-    private List<IndexComponent> indexComponents;
-
-    @OneToMany(mappedBy = "stock")
-    @JsonBackReference("7")
-    private List<TradingData> tradingData;
 }
