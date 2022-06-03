@@ -35,7 +35,7 @@ public class Index {
 
     private int constituents;
 
-    @OneToMany(mappedBy = "index")
+    @OneToMany(mappedBy = "index", cascade = CascadeType.ALL)
     @JsonBackReference("5")
     private List<IndexComponent> indexComponents;
 }

@@ -44,7 +44,7 @@ public class Exchange {
     @JsonBackReference("2")
     private List<Index> indices;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "listings",
             joinColumns = @JoinColumn(name = "exchange_id"),
@@ -55,7 +55,7 @@ public class Exchange {
     @JsonBackReference("3")
     private List<Stock> stocks;
 
-    @OneToMany(mappedBy = "exchange")
+    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
     @JsonBackReference("4")
     private List<TradingData> tradingData;
 }
