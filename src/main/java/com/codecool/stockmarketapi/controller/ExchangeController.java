@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/exchanges")
@@ -29,18 +30,18 @@ public class ExchangeController {
     }
 
     @PostMapping
-    public Long save(@RequestBody Exchange exchange) {
+    public Exchange save(@RequestBody Exchange exchange) {
         return exchangeService.save(exchange);
     }
 
     @PutMapping("/{id}")
-    public Long save(@PathVariable("id") Long id, @RequestBody Exchange exchange) {
+    public Exchange update(@PathVariable("id") Long id, @RequestBody Exchange exchange) {
         exchange.setId(id);
         return exchangeService.save(exchange);
     }
 
     @GetMapping("/{id}")
-    public Exchange findById(@PathVariable("id") Long id) {
+    public Optional<Exchange> findById(@PathVariable("id") Long id) {
         return exchangeService.findById(id);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/indices")
@@ -25,18 +26,18 @@ public class IndexController {
     }
 
     @PostMapping
-    public Long save(@RequestBody Index index) {
+    public Index save(@RequestBody Index index) {
         return indexService.save(index);
     }
 
     @PutMapping("/{id}")
-    public Long save(@PathVariable("id") Long id, @RequestBody Index index) {
+    public Index update(@PathVariable("id") Long id, @RequestBody Index index) {
         index.setId(id);
         return indexService.save(index);
     }
 
     @GetMapping("/{id}")
-    public Index findById(@PathVariable("id") Long id) {
+    public Optional<Index> findById(@PathVariable("id") Long id) {
         return indexService.findById(id);
     }
 
@@ -56,8 +57,8 @@ public class IndexController {
     }
 
     @PostMapping("/components")
-    public void addStockToIndex(@RequestBody IndexComponent indexComponent) {
-        indexService.addStockToIndex(indexComponent);
+    public IndexComponent addStockToIndex(@RequestBody IndexComponent indexComponent) {
+        return indexService.addStockToIndex(indexComponent);
     }
 
     @DeleteMapping("/{symbol}/components/{stock_ticker}")

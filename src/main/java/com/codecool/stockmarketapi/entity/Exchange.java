@@ -1,12 +1,20 @@
 package com.codecool.stockmarketapi.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "exchanges")
 public class Exchange {
@@ -23,6 +31,7 @@ public class Exchange {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
+    @JsonManagedReference("1")
     private Country country;
 
     private String location;
@@ -32,9 +41,10 @@ public class Exchange {
     private String website;
 
     @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
+    @JsonBackReference("2")
     private List<Index> indices;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "listings",
             joinColumns = @JoinColumn(name = "exchange_id"),
@@ -42,8 +52,10 @@ public class Exchange {
             inverseJoinColumns = @JoinColumn(name = "stock_id"),
             inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
+    @JsonBackReference("3")
     private List<Stock> stocks;
 
-    @OneToMany(mappedBy = "exchange")
+    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
+    @JsonBackReference("4")
     private List<TradingData> tradingData;
 }

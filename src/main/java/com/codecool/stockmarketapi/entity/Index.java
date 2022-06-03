@@ -1,12 +1,20 @@
 package com.codecool.stockmarketapi.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "indices")
 public class Index {
@@ -22,10 +30,12 @@ public class Index {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_indices_exchanges"))
+    @JsonManagedReference("2")
     private Exchange exchange;
 
     private int constituents;
 
-    @OneToMany(mappedBy = "index")
+    @OneToMany(mappedBy = "index", cascade = CascadeType.ALL)
+    @JsonBackReference("5")
     private List<IndexComponent> indexComponents;
 }

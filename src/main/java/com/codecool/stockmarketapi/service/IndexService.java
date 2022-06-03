@@ -1,48 +1,56 @@
 package com.codecool.stockmarketapi.service;
 
-import com.codecool.stockmarketapi.dao.GenericCrudDAO;
-import com.codecool.stockmarketapi.dao.IndexDAO;
 import com.codecool.stockmarketapi.entity.Index;
 import com.codecool.stockmarketapi.entity.IndexComponent;
+import com.codecool.stockmarketapi.repository.IndexComponentRepository;
+import com.codecool.stockmarketapi.repository.IndexRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IndexService {
 
-    private GenericCrudDAO<Index> genericCrudDAO;
-    private IndexDAO indexDAO;
+    private IndexRepository indexRepository;
+    private IndexComponentRepository indexComponentRepository;
+
+    @Autowired
+    public IndexService(IndexRepository indexRepository, IndexComponentRepository indexComponentRepository) {
+        this.indexRepository = indexRepository;
+        this.indexComponentRepository = indexComponentRepository;
+    }
 
     public List<Index> listAll() {
-        return genericCrudDAO.listAll();
+        return indexRepository.findAll();
     }
 
-    public Long save(Index index) {
-        return genericCrudDAO.save(index);
+    public Index save(Index index) {
+        return indexRepository.save(index);
     }
 
-    public Index findById(Long id) {
-        return genericCrudDAO.findById(id);
+    public Optional<Index> findById(Long id) {
+        return indexRepository.findById(id);
     }
 
     public void deleteById(Long id) {
-        genericCrudDAO.deleteById(id);
+        indexRepository.deleteById(id);
     }
 
     public Index getIndexBySymbol(String symbol) {
-        return indexDAO.getIndexBySymbol(symbol);
+        return indexRepository.findBySymbol(symbol);
     }
 
     public List<IndexComponent> getAllComponentsByIndexSymbol(String symbol) {
-        return indexDAO.getAllComponentsByIndexSymbol(symbol);
+        return indexRepository.getAllComponentsByIndexSymbol(symbol);
     }
 
-    public void addStockToIndex(IndexComponent indexComponent) {
-        indexDAO.addStockToIndex(indexComponent);
+    public IndexComponent addStockToIndex(IndexComponent indexComponent) {
+        return indexComponentRepository.save(indexComponent);
     }
 
     public void removeStockFromIndex(String stockTicker, String indexSymbol) {
-        indexDAO.removeStockFromIndex(stockTicker, indexSymbol);
+        indexComponentRepository.deleteByStockTickerSymbolAndIndexSymbol(stockTicker, indexSymbol);
     }
 }

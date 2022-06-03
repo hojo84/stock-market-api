@@ -1,11 +1,18 @@
 package com.codecool.stockmarketapi.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "trading_data")
 public class TradingData {
@@ -16,10 +23,12 @@ public class TradingData {
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_exchanges"))
+    @JsonManagedReference("4")
     private Exchange exchange;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_trading_data_stocks"))
+    @JsonManagedReference("7")
     private Stock stock;
 
     private LocalDate tradingDay;
