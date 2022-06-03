@@ -1,6 +1,5 @@
 package com.codecool.stockmarketapi.service;
 
-import com.codecool.stockmarketapi.entity.Index;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,5 @@ public class StockService {
 
     public Stock getStockByTicker(String ticker) {
         return stockRepository.findByTickerSymbol(ticker);
-    }
-
-    public List<Index> getAllIndicesContainingGivenStockByTicker(String ticker) {
-        return stockRepository.getAllIndicesContainingGivenStockByTicker(ticker);
     }
 }

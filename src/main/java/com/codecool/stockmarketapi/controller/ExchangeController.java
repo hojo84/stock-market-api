@@ -1,15 +1,11 @@
 package com.codecool.stockmarketapi.controller;
 
 import com.codecool.stockmarketapi.entity.Exchange;
-import com.codecool.stockmarketapi.entity.Index;
 import com.codecool.stockmarketapi.entity.Stock;
-import com.codecool.stockmarketapi.entity.TradingData;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,11 +51,6 @@ public class ExchangeController {
         return exchangeService.getExchangeByMarketIdentifierCode(marketIdentifierCode);
     }
 
-    @GetMapping("/{mic}/indices")
-    public List<Index> getAllIndicesByExchangeCode(@PathVariable("mic") String marketIdentifierCode) {
-        return exchangeService.getAllIndicesByExchangeCode(marketIdentifierCode);
-    }
-
     @GetMapping("/{mic}/tickers")
     public List<Stock> getAllStocksByExchangeCode(@PathVariable("mic") String marketIdentifierCode) {
         return exchangeService.getAllStocksByExchangeCode(marketIdentifierCode);
@@ -69,12 +60,5 @@ public class ExchangeController {
     public Stock getStockByTickerOnGivenExchange(@PathVariable("mic") String marketIdentifierCode,
                                                  @PathVariable("stock_ticker") String stockTicker) {
         return exchangeService.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
-    }
-
-    @GetMapping("/{mic}/tickers/{stock_ticker}/trading/{date}")
-    public TradingData getTradingDataByStockTickerOnGivenExchangeAndDate(@PathVariable("mic") String marketIdentifierCode,
-                                                                         @PathVariable("stock_ticker") String stockTicker,
-                                                                         @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tradingDay) {
-        return exchangeService.getTradingDataByStockTickerOnGivenExchangeAndDate(marketIdentifierCode, stockTicker, tradingDay);
     }
 }

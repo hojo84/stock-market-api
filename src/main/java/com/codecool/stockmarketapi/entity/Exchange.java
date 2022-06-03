@@ -1,7 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,20 +28,11 @@ public class Exchange {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
-    @JsonManagedReference("1")
-    private Country country;
-
     private String location;
 
     private String currency;
 
     private String website;
-
-    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
-    @JsonBackReference("2")
-    private List<Index> indices;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -54,8 +44,4 @@ public class Exchange {
     )
     @JsonBackReference("3")
     private List<Stock> stocks;
-
-    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
-    @JsonBackReference("4")
-    private List<TradingData> tradingData;
 }
