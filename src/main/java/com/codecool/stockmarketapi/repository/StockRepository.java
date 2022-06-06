@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StockRepository extends JpaRepository<Stock, Long> {
+public interface StockRepository extends JpaRepository<Stock, String> {
 
     List<Stock> findAll();
 
     Stock save(Stock stock);
 
-    Optional<Stock> findById(Long id);
+    Optional<Stock> findById(String id);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 
-    Stock findByTickerSymbol(String ticker);
+//    Stock findByTickerSymbol(String ticker);
 }

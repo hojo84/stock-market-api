@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,12 +18,7 @@ import java.util.List;
 public class Exchange {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NaturalId
-    @Column(name = "iso_mic")
-    private String marketIdentifierCode;
+    private String id;
 
     private String name;
 
@@ -34,7 +28,7 @@ public class Exchange {
 
     private String website;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "listings",
             joinColumns = @JoinColumn(name = "exchange_id"),
@@ -42,6 +36,6 @@ public class Exchange {
             inverseJoinColumns = @JoinColumn(name = "stock_id"),
             inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
-    @JsonBackReference("3")
+    @JsonBackReference("exchange-stock")
     private List<Stock> stocks;
 }

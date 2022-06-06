@@ -27,23 +27,23 @@ public class ExchangeService {
         return exchangeRepository.save(exchange);
     }
 
-    public Optional<Exchange> findById(Long id) {
+    public Optional<Exchange> findById(String id) {
         return exchangeRepository.findById(id);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         exchangeRepository.deleteById(id);
     }
 
-    public Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode) {
-        return exchangeRepository.findByMarketIdentifierCode(marketIdentifierCode);
-    }
-
-    public List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode) {
-        return exchangeRepository.getAllStocksByExchangeCode(marketIdentifierCode);
-    }
-
-    public Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker) {
-        return exchangeRepository.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
-    }
+//    public Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode) {
+//        return exchangeRepository.findByMarketIdentifierCode(marketIdentifierCode);
+//    }
+//
+//    public List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode) {
+//        return exchangeRepository.getAllStocksByExchangeCode(marketIdentifierCode);
+//    }
+//
+//    public Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker) {
+//        return exchangeRepository.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
+//    }
 }

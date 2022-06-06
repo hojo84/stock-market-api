@@ -31,34 +31,34 @@ public class ExchangeController {
     }
 
     @PutMapping("/{id}")
-    public Exchange update(@PathVariable("id") Long id, @RequestBody Exchange exchange) {
+    public Exchange update(@PathVariable("id") String id, @RequestBody Exchange exchange) {
         exchange.setId(id);
         return exchangeService.save(exchange);
     }
 
     @GetMapping("/{id}")
-    public Optional<Exchange> findById(@PathVariable("id") Long id) {
+    public Optional<Exchange> findById(@PathVariable("id") String id) {
         return exchangeService.findById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") String id) {
         exchangeService.deleteById(id);
     }
 
-    @GetMapping("/mic/{mic}")
-    public Exchange getExchangeByMarketIdentifierCode(@PathVariable("mic") String marketIdentifierCode) {
-        return exchangeService.getExchangeByMarketIdentifierCode(marketIdentifierCode);
-    }
-
-    @GetMapping("/{mic}/tickers")
-    public List<Stock> getAllStocksByExchangeCode(@PathVariable("mic") String marketIdentifierCode) {
-        return exchangeService.getAllStocksByExchangeCode(marketIdentifierCode);
-    }
-
-    @GetMapping("/{mic}/tickers/{stock_ticker}")
-    public Stock getStockByTickerOnGivenExchange(@PathVariable("mic") String marketIdentifierCode,
-                                                 @PathVariable("stock_ticker") String stockTicker) {
-        return exchangeService.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
-    }
+//    @GetMapping("/mic/{mic}")
+//    public Exchange getExchangeByMarketIdentifierCode(@PathVariable("mic") String marketIdentifierCode) {
+//        return exchangeService.getExchangeByMarketIdentifierCode(marketIdentifierCode);
+//    }
+//
+//    @GetMapping("/{mic}/tickers")
+//    public List<Stock> getAllStocksByExchangeCode(@PathVariable("mic") String marketIdentifierCode) {
+//        return exchangeService.getAllStocksByExchangeCode(marketIdentifierCode);
+//    }
+//
+//    @GetMapping("/{mic}/tickers/{stock_ticker}")
+//    public Stock getStockByTickerOnGivenExchange(@PathVariable("mic") String marketIdentifierCode,
+//                                                 @PathVariable("stock_ticker") String stockTicker) {
+//        return exchangeService.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
+//    }
 }
