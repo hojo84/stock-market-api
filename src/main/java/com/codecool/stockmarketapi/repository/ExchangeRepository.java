@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
+public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
     List<Exchange> findAll();
 
     Exchange save(Exchange exchange);
 
-    Optional<Exchange> findById(Long id);
+    Optional<Exchange> findById(String id);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 
-    Exchange findByMarketIdentifierCode(String marketIdentifierCode);
-
-    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1")
-    List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode);
-
-    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1 and s.tickerSymbol=?2")
-    Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker);
+//    Exchange findByMarketIdentifierCode(String marketIdentifierCode);
+//
+//    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1")
+//    List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode);
+//
+//    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1 and s.tickerSymbol=?2")
+//    Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker);
 }

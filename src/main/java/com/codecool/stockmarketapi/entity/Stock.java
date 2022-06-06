@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,22 +18,16 @@ import java.util.List;
 public class Stock {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NaturalId
-    private String tickerSymbol;
+    private String id;
 
     private String companyName;
 
     private String sector;
 
-    private String industry;
-
     @Enumerated(EnumType.STRING)
     private EquityType equityType;
 
     @ManyToMany(mappedBy = "stocks")
-    @JsonManagedReference("3")
+    @JsonManagedReference("exchange-stock")
     private List<Exchange> exchanges;
 }

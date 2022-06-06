@@ -26,15 +26,15 @@ public class StockService {
         return stockRepository.save(stock);
     }
 
-    public Optional<Stock> findById(Long id) {
+    public Optional<Stock> findById(String id) {
         return stockRepository.findById(id);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         stockRepository.deleteById(id);
     }
 
-    public Stock getStockByTicker(String ticker) {
-        return stockRepository.findByTickerSymbol(ticker);
-    }
+//    public Stock getStockByTicker(String ticker) {
+//        return stockRepository.findByTickerSymbol(ticker);
+//    }
 }

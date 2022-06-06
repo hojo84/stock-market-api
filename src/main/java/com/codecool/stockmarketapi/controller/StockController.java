@@ -30,23 +30,23 @@ public class StockController {
     }
 
     @PutMapping("/{id}")
-    public Stock update(@PathVariable("id") Long id, @RequestBody Stock stock) {
+    public Stock update(@PathVariable("id") String id, @RequestBody Stock stock) {
         stock.setId(id);
         return stockService.save(stock);
     }
 
     @GetMapping("/{id}")
-    public Optional<Stock> findById(@PathVariable("id") Long id) {
+    public Optional<Stock> findById(@PathVariable("id") String id) {
         return stockService.findById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") String id) {
         stockService.deleteById(id);
     }
 
-    @GetMapping("/tickers/{ticker}")
-    public Stock getStockByTicker(@PathVariable("ticker") String ticker) {
-        return stockService.getStockByTicker(ticker);
-    }
+//    @GetMapping("/tickers/{ticker}")
+//    public Stock getStockByTicker(@PathVariable("ticker") String ticker) {
+//        return stockService.getStockByTicker(ticker);
+//    }
 }
