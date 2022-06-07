@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,7 +38,7 @@ public class Exchange {
             inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
     )
     @JsonBackReference("exchange-stock")
-    private List<Stock> stocks;
+    private Set<Stock> stocks;
 
     public Exchange(ExchangeDTO exchangeDTO) {
         this.id = exchangeDTO.getId();

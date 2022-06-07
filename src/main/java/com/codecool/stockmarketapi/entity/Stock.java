@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class Stock {
 
     @ManyToMany(mappedBy = "stocks")
     @JsonManagedReference("exchange-stock")
-    private List<Exchange> exchanges;
+    private Set<Exchange> exchanges;
 
     public Stock(StockDTO stockDTO) {
         this.id = stockDTO.getId();
