@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.dto.StockDTO;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,9 @@ public class StockService {
         return stockRepository.findAll();
     }
 
-    public Stock save(Stock stock) {
-        return stockRepository.save(stock);
+    public Stock save(StockDTO stockDTO) {
+        Stock stockToBeSaved = new Stock(stockDTO);
+        return stockRepository.save(stockToBeSaved);
     }
 
     public Optional<Stock> findById(String id) {
