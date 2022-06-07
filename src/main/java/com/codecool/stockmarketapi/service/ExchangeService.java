@@ -35,15 +35,11 @@ public class ExchangeService {
         exchangeRepository.deleteById(id);
     }
 
-//    public Exchange getExchangeByMarketIdentifierCode(String marketIdentifierCode) {
-//        return exchangeRepository.findByMarketIdentifierCode(marketIdentifierCode);
-//    }
-//
-//    public List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode) {
-//        return exchangeRepository.getAllStocksByExchangeCode(marketIdentifierCode);
-//    }
-//
-//    public Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker) {
-//        return exchangeRepository.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
-//    }
+    public List<Stock> getAllStocksByExchangeId(String id) {
+        return exchangeRepository.getAllStocksByExchangeId(id);
+    }
+
+    public Stock getStockByIdAndExchangeId(String exchangeId, String stockId) {
+        return exchangeRepository.getStockByIdAndExchangeId(exchangeId, stockId);
+    }
 }

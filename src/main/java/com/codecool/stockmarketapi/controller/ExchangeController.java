@@ -46,19 +46,14 @@ public class ExchangeController {
         exchangeService.deleteById(id);
     }
 
-//    @GetMapping("/mic/{mic}")
-//    public Exchange getExchangeByMarketIdentifierCode(@PathVariable("mic") String marketIdentifierCode) {
-//        return exchangeService.getExchangeByMarketIdentifierCode(marketIdentifierCode);
-//    }
-//
-//    @GetMapping("/{mic}/tickers")
-//    public List<Stock> getAllStocksByExchangeCode(@PathVariable("mic") String marketIdentifierCode) {
-//        return exchangeService.getAllStocksByExchangeCode(marketIdentifierCode);
-//    }
-//
-//    @GetMapping("/{mic}/tickers/{stock_ticker}")
-//    public Stock getStockByTickerOnGivenExchange(@PathVariable("mic") String marketIdentifierCode,
-//                                                 @PathVariable("stock_ticker") String stockTicker) {
-//        return exchangeService.getStockByTickerOnGivenExchange(marketIdentifierCode, stockTicker);
-//    }
+    @GetMapping("/{id}/stocks")
+    public List<Stock> getAllStocksByExchangeId(@PathVariable("id") String id) {
+        return exchangeService.getAllStocksByExchangeId(id);
+    }
+
+    @GetMapping("/{exchangeId}/stocks/{stockId}")
+    public Stock getStockByIdAndExchangeId(@PathVariable("exchangeId") String exchangeId,
+                                           @PathVariable("stockId") String stockId) {
+        return exchangeService.getStockByIdAndExchangeId(exchangeId, stockId);
+    }
 }

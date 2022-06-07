@@ -20,11 +20,9 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
     void deleteById(String id);
 
-//    Exchange findByMarketIdentifierCode(String marketIdentifierCode);
-//
-//    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1")
-//    List<Stock> getAllStocksByExchangeCode(String marketIdentifierCode);
-//
-//    @Query("select s from Exchange e join e.stocks s where e.marketIdentifierCode=?1 and s.tickerSymbol=?2")
-//    Stock getStockByTickerOnGivenExchange(String marketIdentifierCode, String stockTicker);
+    @Query("select s from Exchange e join e.stocks s where e.id=?1")
+    List<Stock> getAllStocksByExchangeId(String id);
+
+    @Query("select s from Exchange e join e.stocks s where e.id=?1 and s.id=?2")
+    Stock getStockByIdAndExchangeId(String exchangeId, String stockId);
 }
