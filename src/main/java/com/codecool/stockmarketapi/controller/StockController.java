@@ -44,9 +44,4 @@ public class StockController {
     public void deleteById(@PathVariable("id") String id) {
         stockService.deleteById(id);
     }
-
-//    @GetMapping("/tickers/{ticker}")
-//    public Stock getStockByTicker(@PathVariable("ticker") String ticker) {
-//        return stockService.getStockByTicker(ticker);
-//    }
 }
