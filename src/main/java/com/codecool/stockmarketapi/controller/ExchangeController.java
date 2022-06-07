@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.controller;
 
+import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.ExchangeService;
@@ -26,14 +27,14 @@ public class ExchangeController {
     }
 
     @PostMapping
-    public Exchange save(@RequestBody Exchange exchange) {
-        return exchangeService.save(exchange);
+    public Exchange save(@RequestBody ExchangeDTO exchangeDTO) {
+        return exchangeService.save(exchangeDTO);
     }
 
     @PutMapping("/{id}")
-    public Exchange update(@PathVariable("id") String id, @RequestBody Exchange exchange) {
-        exchange.setId(id);
-        return exchangeService.save(exchange);
+    public Exchange update(@PathVariable("id") String id, @RequestBody ExchangeDTO exchangeDTO) {
+        exchangeDTO.setId(id);
+        return exchangeService.save(exchangeDTO);
     }
 
     @GetMapping("/{id}")

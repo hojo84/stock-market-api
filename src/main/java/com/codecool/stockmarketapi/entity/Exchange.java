@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.entity;
 
+import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,12 @@ public class Exchange {
     )
     @JsonBackReference("exchange-stock")
     private List<Stock> stocks;
+
+    public Exchange(ExchangeDTO exchangeDTO) {
+        this.id = exchangeDTO.getId();
+        this.name = exchangeDTO.getName();
+        this.location = exchangeDTO.getLocation();
+        this.currency = exchangeDTO.getCurrency();
+        this.website = exchangeDTO.getWebsite();
+    }
 }
