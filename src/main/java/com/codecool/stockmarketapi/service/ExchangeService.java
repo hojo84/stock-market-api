@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -23,8 +24,9 @@ public class ExchangeService {
         return exchangeRepository.findAll();
     }
 
-    public Exchange save(Exchange exchange) {
-        return exchangeRepository.save(exchange);
+    public Exchange save(ExchangeDTO exchangeDTO) {
+        Exchange exchangeToBeSaved = new Exchange(exchangeDTO);
+        return exchangeRepository.save(exchangeToBeSaved);
     }
 
     public Optional<Exchange> findById(String id) {
