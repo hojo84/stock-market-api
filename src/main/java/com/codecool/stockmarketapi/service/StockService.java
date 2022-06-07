@@ -33,8 +33,4 @@ public class StockService {
     public void deleteById(String id) {
         stockRepository.deleteById(id);
     }
-
-//    public Stock getStockByTicker(String ticker) {
-//        return stockRepository.findByTickerSymbol(ticker);
-//    }
 }

@@ -17,6 +17,4 @@ public interface StockRepository extends JpaRepository<Stock, String> {
     Optional<Stock> findById(String id);
 
     void deleteById(String id);
-
-//    Stock findByTickerSymbol(String ticker);
 }
