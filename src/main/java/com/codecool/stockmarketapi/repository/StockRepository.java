@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,4 +22,9 @@ public interface StockRepository extends JpaRepository<Stock, String> {
     @Modifying
     @Query("delete from Stock s where s.id=?1")
     void deleteById(String id);
+
+    @Modifying
+    @Query("delete from Stock s where s.exchanges is empty")
+    @Transactional
+    void deleteAllOrphanStocks();
 }
