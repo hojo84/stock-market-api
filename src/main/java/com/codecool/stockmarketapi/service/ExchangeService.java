@@ -4,6 +4,7 @@ import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
+import com.codecool.stockmarketapi.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class ExchangeService {
 
     private ExchangeRepository exchangeRepository;
+    private StockRepository stockRepository;
 
     @Autowired
-    public ExchangeService(ExchangeRepository exchangeRepository) {
+    public ExchangeService(ExchangeRepository exchangeRepository, StockRepository stockRepository) {
         this.exchangeRepository = exchangeRepository;
+        this.stockRepository = stockRepository;
     }
 
     public List<Exchange> listAll() {
@@ -35,6 +38,7 @@ public class ExchangeService {
 
     public void deleteById(String id) {
         exchangeRepository.deleteById(id);
+        stockRepository.deleteAllOrphanStocks();
     }
 
     public List<Stock> getAllStocksByExchangeId(String id) {
