@@ -22,7 +22,7 @@ public class ExchangeController {
     }
 
     @GetMapping
-    public List<Exchange> listAll() {
+    public List<String> listAll() {
         return exchangeService.listAll();
     }
 

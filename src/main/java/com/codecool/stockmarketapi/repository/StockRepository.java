@@ -13,7 +13,8 @@ import java.util.Optional;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
 
-    List<Stock> findAll();
+    @Query("select concat(s.companyName, ' (', s.id, ')') from Stock s order by s.companyName")
+    List<String> findAllStockNames();
 
     Stock save(Stock stock);
 

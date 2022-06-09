@@ -19,8 +19,8 @@ public class StockService {
         this.stockRepository = stockRepository;
     }
 
-    public List<Stock> listAll() {
-        return stockRepository.findAll();
+    public List<String> listAll() {
+        return stockRepository.findAllStockNames();
     }
 
     public Stock save(StockDTO stockDTO) {

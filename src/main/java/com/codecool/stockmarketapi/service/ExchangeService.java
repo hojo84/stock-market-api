@@ -23,8 +23,8 @@ public class ExchangeService {
         this.stockRepository = stockRepository;
     }
 
-    public List<Exchange> listAll() {
-        return exchangeRepository.findAll();
+    public List<String> listAll() {
+        return exchangeRepository.findAllExchangeNames();
     }
 
     public Exchange save(ExchangeDTO exchangeDTO) {
