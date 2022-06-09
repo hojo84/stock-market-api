@@ -12,7 +12,8 @@ import java.util.Optional;
 @Repository
 public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
-    List<Exchange> findAll();
+    @Query("select concat(e.name, ' (', e.id,  ')') from Exchange e order by e.name")
+    List<String> findAllExchangeNames();
 
     Exchange save(Exchange exchange);
 
