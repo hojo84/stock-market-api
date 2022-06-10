@@ -47,4 +47,14 @@ public class Exchange {
         this.currency = exchangeDTO.getCurrency();
         this.website = exchangeDTO.getWebsite();
     }
+
+    public void addStock(Stock stock) {
+        stocks.add(stock);
+        stock.getExchanges().add(this);
+    }
+
+    public void removeStock(Stock stock) {
+        stocks.remove(stock);
+        stock.getExchanges().remove(this);
+    }
 }
