@@ -48,4 +48,13 @@ public class StockService {
         exchange.addStock(stockToBeAdded);
         exchangeRepository.save(exchange);
     }
+
+    public void removeStockFromExchangeById(String stockId, String exchangeId) {
+        Exchange exchange = exchangeRepository.findById(exchangeId)
+                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
+        Stock stockToBeRemoved = findById(stockId)
+                .orElseThrow(() -> new IllegalArgumentException("Stock does not exists: " + stockId));
+        exchange.removeStock(stockToBeRemoved);
+        exchangeRepository.save(exchange);
+    }
 }

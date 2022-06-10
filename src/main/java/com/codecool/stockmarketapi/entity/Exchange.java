@@ -52,4 +52,9 @@ public class Exchange {
         stocks.add(stock);
         stock.getExchanges().add(this);
     }
+
+    public void removeStock(Stock stock) {
+        stocks.remove(stock);
+        stock.getExchanges().remove(this);
+    }
 }
