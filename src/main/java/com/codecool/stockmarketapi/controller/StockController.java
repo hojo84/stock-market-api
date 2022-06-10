@@ -45,4 +45,10 @@ public class StockController {
     public void deleteById(@PathVariable("id") String id) {
         stockService.deleteById(id);
     }
+
+    @PostMapping("/{stockId}/listings/{exchangeId}")
+    public void addStockToExchangeById(@PathVariable("stockId") String stockId,
+                                       @PathVariable("exchangeId") String exchangeId) {
+        stockService.addStockToExchangeById(stockId, exchangeId);
+    }
 }

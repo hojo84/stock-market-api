@@ -1,7 +1,9 @@
 package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.dto.StockDTO;
+import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
+import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import com.codecool.stockmarketapi.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class StockService {
 
     private StockRepository stockRepository;
+    private ExchangeRepository exchangeRepository;
 
     @Autowired
-    public StockService(StockRepository stockRepository) {
+    public StockService(StockRepository stockRepository, ExchangeRepository exchangeRepository) {
         this.stockRepository = stockRepository;
+        this.exchangeRepository = exchangeRepository;
     }
 
     public List<String> listAll() {
@@ -34,5 +38,14 @@ public class StockService {
 
     public void deleteById(String id) {
         stockRepository.deleteById(id);
+    }
+
+    public void addStockToExchangeById(String stockId, String exchangeId) {
+        Exchange exchange = exchangeRepository.findById(exchangeId)
+                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
+        Stock stockToBeAdded = findById(stockId)
+                .orElseThrow(() -> new IllegalArgumentException("Stock does not exists: " + stockId));
+        exchange.addStock(stockToBeAdded);
+        exchangeRepository.save(exchange);
     }
 }
