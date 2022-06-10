@@ -32,6 +32,11 @@ public class StockService {
         return stockRepository.save(stockToBeSaved);
     }
 
+    public Stock update(StockDTO stockDTO) {
+        Stock stockToBeUpdated = new Stock(stockDTO);
+        return stockRepository.save(stockToBeUpdated);
+    }
+
     public Optional<Stock> findById(String id) {
         return stockRepository.findById(id);
     }

@@ -33,7 +33,7 @@ public class StockController {
     @PutMapping("/{id}")
     public Stock update(@PathVariable("id") String id, @RequestBody StockDTO stockDTO) {
         stockDTO.setId(id);
-        return stockService.save(stockDTO);
+        return stockService.update(stockDTO);
     }
 
     @GetMapping("/{id}")
