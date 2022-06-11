@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.dto.CreateStockDTO;
-import com.codecool.stockmarketapi.dto.StockDTO;
+import com.codecool.stockmarketapi.dto.UpdateStockDTO;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -43,8 +43,8 @@ public class StockService {
         return newStockSaved;
     }
 
-    public Stock update(StockDTO stockDTO) {
-        Stock stockToBeUpdated = new Stock(stockDTO);
+    public Stock update(UpdateStockDTO updateStockDTO) {
+        Stock stockToBeUpdated = new Stock(updateStockDTO);
         return stockRepository.save(stockToBeUpdated);
     }
 

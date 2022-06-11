@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
 import com.codecool.stockmarketapi.dto.CreateStockDTO;
-import com.codecool.stockmarketapi.dto.StockDTO;
+import com.codecool.stockmarketapi.dto.UpdateStockDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,10 +41,10 @@ public class Stock {
         this.equityType = createStockDTO.getEquityType();
     }
 
-    public Stock(StockDTO stockDTO) {
-        this.id = stockDTO.getId();
-        this.companyName = stockDTO.getCompanyName();
-        this.sector = stockDTO.getSector();
-        this.equityType = stockDTO.getEquityType();
+    public Stock(UpdateStockDTO updateStockDTO) {
+        this.id = updateStockDTO.getId();
+        this.companyName = updateStockDTO.getCompanyName();
+        this.sector = updateStockDTO.getSector();
+        this.equityType = updateStockDTO.getEquityType();
     }
 }

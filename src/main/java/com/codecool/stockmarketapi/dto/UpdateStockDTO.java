@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StockDTO {
+public class UpdateStockDTO {
 
     private String id;
     private String companyName;
