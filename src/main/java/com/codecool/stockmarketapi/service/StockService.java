@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.dto.CreateStockDTO;
 import com.codecool.stockmarketapi.dto.StockDTO;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Stock;
@@ -27,9 +28,19 @@ public class StockService {
         return stockRepository.findAllStockNames();
     }
 
-    public Stock save(StockDTO stockDTO) {
-        Stock stockToBeSaved = new Stock(stockDTO);
-        return stockRepository.save(stockToBeSaved);
+    public Stock save(CreateStockDTO createStockDTO) {
+        if (createStockDTO.getExchangeIds().isEmpty())
+            throw new IllegalArgumentException("No exchangeId has been provided");
+        Stock newStockSaved = stockRepository.save(new Stock(createStockDTO));
+        final List<Exchange> exchangeList = createStockDTO.getExchangeIds().stream()
+                .map(exchangeId -> exchangeRepository.findById(exchangeId)
+                        .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId)))
+                .toList();
+        exchangeList.forEach(exchange -> {
+            exchange.addStock(newStockSaved);
+            exchangeRepository.save(exchange);
+        });
+        return newStockSaved;
     }
 
     public Stock update(StockDTO stockDTO) {

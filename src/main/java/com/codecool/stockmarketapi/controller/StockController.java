@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.controller;
 
+import com.codecool.stockmarketapi.dto.CreateStockDTO;
 import com.codecool.stockmarketapi.dto.StockDTO;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.StockService;
@@ -26,8 +27,8 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock save(@RequestBody StockDTO stockDTO) {
-        return stockService.save(stockDTO);
+    public Stock save(@RequestBody CreateStockDTO createStockDTO) {
+        return stockService.save(createStockDTO);
     }
 
     @PutMapping("/{id}")
