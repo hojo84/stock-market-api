@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
-import com.codecool.stockmarketapi.dto.StockDTO;
+import com.codecool.stockmarketapi.dto.CreateStockDTO;
+import com.codecool.stockmarketapi.dto.UpdateStockDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -30,12 +32,19 @@ public class Stock {
 
     @ManyToMany(mappedBy = "stocks")
     @JsonManagedReference("exchange-stock")
-    private Set<Exchange> exchanges;
+    private Set<Exchange> exchanges = new HashSet<>();
 
-    public Stock(StockDTO stockDTO) {
-        this.id = stockDTO.getId();
-        this.companyName = stockDTO.getCompanyName();
-        this.sector = stockDTO.getSector();
-        this.equityType = stockDTO.getEquityType();
+    public Stock(CreateStockDTO createStockDTO) {
+        this.id = createStockDTO.getId();
+        this.companyName = createStockDTO.getCompanyName();
+        this.sector = createStockDTO.getSector();
+        this.equityType = createStockDTO.getEquityType();
+    }
+
+    public Stock(UpdateStockDTO updateStockDTO) {
+        this.id = updateStockDTO.getId();
+        this.companyName = updateStockDTO.getCompanyName();
+        this.sector = updateStockDTO.getSector();
+        this.equityType = updateStockDTO.getEquityType();
     }
 }

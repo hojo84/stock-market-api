@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.controller;
 
-import com.codecool.stockmarketapi.dto.StockDTO;
+import com.codecool.stockmarketapi.dto.CreateStockDTO;
+import com.codecool.stockmarketapi.dto.UpdateStockDTO;
 import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock save(@RequestBody StockDTO stockDTO) {
-        return stockService.save(stockDTO);
+    public Stock save(@RequestBody CreateStockDTO createStockDTO) {
+        return stockService.save(createStockDTO);
     }
 
     @PutMapping("/{id}")
-    public Stock update(@PathVariable("id") String id, @RequestBody StockDTO stockDTO) {
-        stockDTO.setId(id);
-        return stockService.save(stockDTO);
+    public Stock update(@PathVariable("id") String id, @RequestBody UpdateStockDTO updateStockDTO) {
+        updateStockDTO.setId(id);
+        return stockService.update(updateStockDTO);
     }
 
     @GetMapping("/{id}")
