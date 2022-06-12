@@ -47,7 +47,7 @@ public class CompanyController {
         companyService.deleteById(id);
     }
 
-    @PostMapping("/{companyId}/listings/{exchangeId}")
+    @PutMapping("/{companyId}/listings/{exchangeId}")
     public void addCompanyToExchangeById(@PathVariable("companyId") String companyId,
                                          @PathVariable("exchangeId") String exchangeId) {
         companyService.addCompanyToExchangeById(companyId, exchangeId);
