@@ -1,8 +1,8 @@
 package com.codecool.stockmarketapi.controller;
 
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
+import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
-import com.codecool.stockmarketapi.entity.Stock;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,14 +47,14 @@ public class ExchangeController {
         exchangeService.deleteById(id);
     }
 
-    @GetMapping("/{id}/stocks")
-    public List<Stock> getAllStocksByExchangeId(@PathVariable("id") String id) {
-        return exchangeService.getAllStocksByExchangeId(id);
+    @GetMapping("/{id}/companies")
+    public List<Company> getAllCompaniesByExchangeId(@PathVariable("id") String id) {
+        return exchangeService.getAllCompaniesByExchangeId(id);
     }
 
-    @GetMapping("/{exchangeId}/stocks/{stockId}")
-    public Stock getStockByIdAndExchangeId(@PathVariable("exchangeId") String exchangeId,
-                                           @PathVariable("stockId") String stockId) {
-        return exchangeService.getStockByIdAndExchangeId(exchangeId, stockId);
+    @GetMapping("/{exchangeId}/companies/{companyId}")
+    public Company getCompanyByIdAndExchangeId(@PathVariable("exchangeId") String exchangeId,
+                                               @PathVariable("companyId") String companyId) {
+        return exchangeService.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
 }

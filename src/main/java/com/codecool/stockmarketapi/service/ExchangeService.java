@@ -1,10 +1,10 @@
 package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
+import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
-import com.codecool.stockmarketapi.entity.Stock;
+import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
-import com.codecool.stockmarketapi.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ import java.util.Optional;
 @Service
 public class ExchangeService {
 
-    private ExchangeRepository exchangeRepository;
-    private StockRepository stockRepository;
+    private final ExchangeRepository exchangeRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    public ExchangeService(ExchangeRepository exchangeRepository, StockRepository stockRepository) {
+    public ExchangeService(ExchangeRepository exchangeRepository, CompanyRepository companyRepository) {
         this.exchangeRepository = exchangeRepository;
-        this.stockRepository = stockRepository;
+        this.companyRepository = companyRepository;
     }
 
     public List<String> listAll() {
@@ -38,14 +38,14 @@ public class ExchangeService {
 
     public void deleteById(String id) {
         exchangeRepository.deleteById(id);
-        stockRepository.deleteAllOrphanStocks();
+        companyRepository.deleteAllOrphanCompanies();
     }
 
-    public List<Stock> getAllStocksByExchangeId(String id) {
-        return exchangeRepository.getAllStocksByExchangeId(id);
+    public List<Company> getAllCompaniesByExchangeId(String id) {
+        return exchangeRepository.getAllCompaniesByExchangeId(id);
     }
 
-    public Stock getStockByIdAndExchangeId(String exchangeId, String stockId) {
-        return exchangeRepository.getStockByIdAndExchangeId(exchangeId, stockId);
+    public Company getCompanyByIdAndExchangeId(String exchangeId, String companyId) {
+        return exchangeRepository.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
 }

@@ -4,17 +4,17 @@ insert into exchanges (id, currency, location, name, website) values('SSE', 'CNY
 insert into exchanges (id, currency, location, name, website) values('BUD', 'HUF', 'Budapest', 'Budapest Stock Exchange Index', 'bet.hu');
 insert into exchanges (id, currency, location, name, website) values('LSE', 'GBP', 'London', 'London Stock Exchange', 'www.londonstockexchange.com');
 
-insert into stocks (id, company_name, equity_type, sector) values ('AAPL', 'Apple', 'COMMON_STOCK', 'Information Technology');
-insert into stocks (id, company_name, equity_type, sector) values ('OTP', 'OTP Nyrt', 'COMMON_STOCK', 'Financials');
-insert into stocks (id, company_name, equity_type, sector) values ('MOL', 'MOL Nyrt', 'COMMON_STOCK', 'Energy');
-insert into stocks (id, company_name, equity_type, sector) values ('NVDA', 'Nvidia', 'COMMON_STOCK', 'Information Technology');
-insert into stocks (id, company_name, equity_type, sector) values ('WDAY', 'Workday', 'COMMON_STOCK', 'Information Technology');
-insert into stocks (id, company_name, equity_type, sector) values ('UGI', 'UGI Corp', 'COMMON_STOCK', 'Utilities');
+insert into companies (id, equity_type, name, sector) values ('AAPL', 'COMMON_STOCK', 'Apple', 'Information Technology');
+insert into companies (id, equity_type, name, sector) values ('OTP', 'COMMON_STOCK', 'OTP Nyrt', 'Financials');
+insert into companies (id, equity_type, name, sector) values ('MOL', 'COMMON_STOCK', 'MOL Nyrt', 'Energy');
+insert into companies (id, equity_type, name, sector) values ('NVDA', 'COMMON_STOCK', 'Nvidia', 'Information Technology');
+insert into companies (id, equity_type, name, sector) values ('WDAY', 'COMMON_STOCK', 'Workday', 'Information Technology');
+insert into companies (id, equity_type, name, sector) values ('UGI', 'COMMON_STOCK', 'UGI Corp', 'Utilities');
 
-insert into listings (exchange_id, stock_id) values ('NYSE', 'UGI');
-insert into listings (exchange_id, stock_id) values ('XNAS', 'AAPL');
-insert into listings (exchange_id, stock_id) values ('XNAS', 'NVDA');
-insert into listings (exchange_id, stock_id) values ('XNAS', 'WDAY');
-insert into listings (exchange_id, stock_id) values ('BUD', 'OTP');
-insert into listings (exchange_id, stock_id) values ('BUD', 'MOL');
-insert into listings (exchange_id, stock_id) values ('LSE', 'OTP');
+insert into listings (exchange_id, company_id) values ('NYSE', 'UGI');
+insert into listings (exchange_id, company_id) values ('XNAS', 'AAPL');
+insert into listings (exchange_id, company_id) values ('XNAS', 'NVDA');
+insert into listings (exchange_id, company_id) values ('XNAS', 'WDAY');
+insert into listings (exchange_id, company_id) values ('BUD', 'OTP');
+insert into listings (exchange_id, company_id) values ('BUD', 'MOL');
+insert into listings (exchange_id, company_id) values ('LSE', 'OTP');

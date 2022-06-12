@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.repository;
 
+import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
-import com.codecool.stockmarketapi.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,9 +22,9 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
     void deleteById(String id);
 
-    @Query("select s from Exchange e join e.stocks s where e.id=?1")
-    List<Stock> getAllStocksByExchangeId(String id);
+    @Query("select c from Exchange e join e.companies c where e.id=?1")
+    List<Company> getAllCompaniesByExchangeId(String id);
 
-    @Query("select s from Exchange e join e.stocks s where e.id=:exchangeId and s.id=:stockId")
-    Stock getStockByIdAndExchangeId(@Param("exchangeId") String exchangeId, @Param("stockId") String stockId);
+    @Query("select c from Exchange e join e.companies c where e.id=:exchangeId and c.id=:companyId")
+    Company getCompanyByIdAndExchangeId(@Param("exchangeId") String exchangeId, @Param("companyId") String companyId);
 }
