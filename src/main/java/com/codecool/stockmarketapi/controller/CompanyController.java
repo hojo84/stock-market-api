@@ -44,9 +44,14 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public Company update(@PathVariable("id") String id, @RequestBody UpdateCompanyDTO updateCompanyDTO) {
+    public ResponseEntity<Company> update(@PathVariable("id") String id, @Valid @RequestBody UpdateCompanyDTO updateCompanyDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("INVALID COMPANY INPUT");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
         updateCompanyDTO.setId(id);
-        return companyService.update(updateCompanyDTO);
+        return ResponseEntity.ok(companyService.update(updateCompanyDTO));
     }
 
     @GetMapping("/{id}")
