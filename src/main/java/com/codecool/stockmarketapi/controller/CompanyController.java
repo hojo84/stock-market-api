@@ -4,9 +4,14 @@ import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.service.CompanyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +20,8 @@ import java.util.Optional;
 public class CompanyController {
 
     private final CompanyService companyService;
+
+    Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -27,8 +34,13 @@ public class CompanyController {
     }
 
     @PostMapping
-    public Company save(@RequestBody CreateCompanyDTO createCompanyDTO) {
-        return companyService.save(createCompanyDTO);
+    public ResponseEntity<Company> save(@Valid @RequestBody CreateCompanyDTO createCompanyDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logger.error("INVALID COMPANY INPUT");
+            bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(companyService.save(createCompanyDTO));
     }
 
     @PutMapping("/{id}")
