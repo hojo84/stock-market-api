@@ -34,11 +34,11 @@ public class Exchange {
             name = "listings",
             joinColumns = @JoinColumn(name = "exchange_id"),
             foreignKey = @ForeignKey(name = "fk_listings_exchanges"),
-            inverseJoinColumns = @JoinColumn(name = "stock_id"),
-            inverseForeignKey = @ForeignKey(name = "fk_listings_stocks")
+            inverseJoinColumns = @JoinColumn(name = "company_id"),
+            inverseForeignKey = @ForeignKey(name = "fk_listings_companies")
     )
-    @JsonBackReference("exchange-stock")
-    private Set<Stock> stocks;
+    @JsonBackReference("exchange-company")
+    private Set<Company> companies;
 
     public Exchange(ExchangeDTO exchangeDTO) {
         this.id = exchangeDTO.getId();
@@ -48,13 +48,13 @@ public class Exchange {
         this.website = exchangeDTO.getWebsite();
     }
 
-    public void addStock(Stock stock) {
-        stocks.add(stock);
-        stock.getExchanges().add(this);
+    public void addCompany(Company company) {
+        companies.add(company);
+        company.getExchanges().add(this);
     }
 
-    public void removeStock(Stock stock) {
-        stocks.remove(stock);
-        stock.getExchanges().remove(this);
+    public void removeCompany(Company company) {
+        companies.remove(company);
+        company.getExchanges().remove(this);
     }
 }

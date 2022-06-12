@@ -4,12 +4,15 @@ import com.codecool.stockmarketapi.entity.EquityType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
-public class UpdateStockDTO {
+public class CreateCompanyDTO {
 
     private String id;
-    private String companyName;
+    private String name;
     private String sector;
     private EquityType equityType;
+    private Set<String> exchangeIds;
 }
