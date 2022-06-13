@@ -77,8 +77,4 @@ public class CompanyController {
         companyService.removeCompanyFromExchangeById(companyId, exchangeId);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleNotFound() {
-    }
 }

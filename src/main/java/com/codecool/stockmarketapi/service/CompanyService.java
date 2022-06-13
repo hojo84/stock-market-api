@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
@@ -31,7 +32,7 @@ public class CompanyService {
         Company newCompanySaved = companyRepository.save(new Company(createCompanyDTO));
         final List<Exchange> exchangeList = createCompanyDTO.getExchangeIds().stream()
                 .map(exchangeId -> exchangeRepository.findById(exchangeId)
-                        .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId)))
+                        .orElseThrow(() -> new ExchangeNotFoundException(exchangeId)))
                 .toList();
         exchangeList.forEach(exchange -> {
             exchange.addCompany(newCompanySaved);
@@ -57,7 +58,7 @@ public class CompanyService {
 
     public void addCompanyToExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
+                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
         Company companyToBeAdded = findById(companyId);
         exchange.addCompany(companyToBeAdded);
         exchangeRepository.save(exchange);
@@ -65,7 +66,7 @@ public class CompanyService {
 
     public void removeCompanyFromExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
+                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
         Company companyToBeRemoved = findById(companyId);
         exchange.removeCompany(companyToBeRemoved);
         exchangeRepository.save(exchange);
