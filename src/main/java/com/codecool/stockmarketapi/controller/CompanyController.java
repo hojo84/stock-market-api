@@ -76,4 +76,9 @@ public class CompanyController {
                                               @PathVariable("exchangeId") String exchangeId) {
         companyService.removeCompanyFromExchangeById(companyId, exchangeId);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleNotFound() {
+    }
 }
