@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.customexception.CompanyNotFoundException;
 import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
@@ -51,7 +52,7 @@ public class ExchangeService {
     public Company getCompanyByIdAndExchangeId(String exchangeId, String companyId) {
         findById(exchangeId);
         companyRepository.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + companyId));
+                .orElseThrow(() -> new CompanyNotFoundException(companyId));
         return exchangeRepository.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
 }
