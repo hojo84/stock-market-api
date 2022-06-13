@@ -29,8 +29,6 @@ public class CompanyService {
     }
 
     public Company save(CreateCompanyDTO createCompanyDTO) {
-        if (createCompanyDTO.getExchangeIds().isEmpty())
-            throw new IllegalArgumentException("No exchangeId has been provided");
         Company newCompanySaved = companyRepository.save(new Company(createCompanyDTO));
         final List<Exchange> exchangeList = createCompanyDTO.getExchangeIds().stream()
                 .map(exchangeId -> exchangeRepository.findById(exchangeId)
