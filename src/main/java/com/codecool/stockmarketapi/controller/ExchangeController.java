@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/exchanges")
@@ -56,7 +55,7 @@ public class ExchangeController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Exchange> findById(@PathVariable("id") String id) {
+    public Exchange findById(@PathVariable("id") String id) {
         return exchangeService.findById(id);
     }
 

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -46,19 +45,20 @@ public class CompanyService {
         return companyRepository.save(companyToBeUpdated);
     }
 
-    public Optional<Company> findById(String id) {
-        return companyRepository.findById(id);
+    public Company findById(String id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + id));
     }
 
     public void deleteById(String id) {
+        findById(id);
         companyRepository.deleteById(id);
     }
 
     public void addCompanyToExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
                 .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
-        Company companyToBeAdded = findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + companyId));
+        Company companyToBeAdded = findById(companyId);
         exchange.addCompany(companyToBeAdded);
         exchangeRepository.save(exchange);
     }
@@ -66,8 +66,7 @@ public class CompanyService {
     public void removeCompanyFromExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
                 .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
-        Company companyToBeRemoved = findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + companyId));
+        Company companyToBeRemoved = findById(companyId);
         exchange.removeCompany(companyToBeRemoved);
         exchangeRepository.save(exchange);
     }
