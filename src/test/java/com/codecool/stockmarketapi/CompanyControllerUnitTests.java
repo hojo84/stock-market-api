@@ -1,21 +1,27 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.CompanyController;
+import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.service.CompanyService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,10 +31,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CompanyControllerUnitTests {
 
     @MockBean
-    CompanyService companyService;
+    private CompanyService companyService;
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void testFindAllCompanies() throws Exception {
@@ -60,6 +69,22 @@ public class CompanyControllerUnitTests {
                 .andExpect(jsonPath("$.name", equalTo("Nvidia")))
                 .andExpect(jsonPath("$.sector", equalTo("Information Technology")))
                 .andExpect(jsonPath("$.equityType", equalTo("COMMON_STOCK")));
+    }
+
+    @Test
+    public void testSaveCompany() throws Exception {
+        Company nvidia = new Company("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK, Collections.emptySet());
+        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK,
+                Set.of("SSE", "NYSE"));
+
+        when(companyService.save(any())).thenReturn(nvidia);
+
+        mockMvc.perform(post("/companies")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newCompany)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo("NVDA")));
     }
 
 }
