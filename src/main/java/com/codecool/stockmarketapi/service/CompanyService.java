@@ -43,7 +43,10 @@ public class CompanyService {
     }
 
     public Company update(UpdateCompanyDTO updateCompanyDTO) {
-        Company companyToBeUpdated = new Company(updateCompanyDTO);
+        Company companyToBeUpdated = findById(updateCompanyDTO.getId());
+        companyToBeUpdated.setName(updateCompanyDTO.getName());
+        companyToBeUpdated.setSector(updateCompanyDTO.getSector());
+        companyToBeUpdated.setEquityType(updateCompanyDTO.getEquityType());
         return companyRepository.save(companyToBeUpdated);
     }
 
