@@ -1,6 +1,8 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.CompanyController;
+import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.service.CompanyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -43,6 +46,20 @@ public class CompanyControllerUnitTests {
                 .andExpect(jsonPath("$.size()", equalTo(3)))
                 .andExpect(jsonPath("$[0]", equalTo("Apple (AAPL)")))
                 .andExpect(jsonPath("$[1]", equalTo("MOL Nyrt (MOL)")));
+    }
+
+    @Test
+    public void testFindCompanyById() throws Exception {
+        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK, Collections.emptySet());
+
+        when(companyService.findById("NVDA")).thenReturn(nvidia);
+
+        mockMvc.perform(get("/companies/NVDA"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", equalTo("Nvidia")))
+                .andExpect(jsonPath("$.sector", equalTo("Information Technology")))
+                .andExpect(jsonPath("$.equityType", equalTo("COMMON_STOCK")));
     }
 
 }
