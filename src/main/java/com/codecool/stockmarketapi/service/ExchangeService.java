@@ -33,6 +33,15 @@ public class ExchangeService {
         return exchangeRepository.save(exchangeToBeSaved);
     }
 
+    public Exchange update(ExchangeDTO exchangeDTO) {
+        Exchange exchangeToBeUpdated = findById(exchangeDTO.getId());
+        exchangeToBeUpdated.setName(exchangeDTO.getName());
+        exchangeToBeUpdated.setLocation(exchangeDTO.getLocation());
+        exchangeToBeUpdated.setCurrency(exchangeDTO.getCurrency());
+        exchangeToBeUpdated.setWebsite(exchangeDTO.getWebsite());
+        return exchangeRepository.save(exchangeToBeUpdated);
+    }
+
     public Exchange findById(String id) {
         return exchangeRepository.findById(id)
                 .orElseThrow(() -> new ExchangeNotFoundException(id));

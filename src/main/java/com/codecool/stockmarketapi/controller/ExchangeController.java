@@ -51,7 +51,7 @@ public class ExchangeController {
             return ResponseEntity.badRequest().build();
         }
         exchangeDTO.setId(id);
-        return ResponseEntity.ok(exchangeService.save(exchangeDTO));
+        return ResponseEntity.ok(exchangeService.update(exchangeDTO));
     }
 
     @GetMapping("/{id}")
