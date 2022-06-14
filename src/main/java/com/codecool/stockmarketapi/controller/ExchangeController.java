@@ -7,13 +7,13 @@ import com.codecool.stockmarketapi.service.ExchangeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/exchanges")
@@ -55,11 +55,12 @@ public class ExchangeController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Exchange> findById(@PathVariable("id") String id) {
+    public Exchange findById(@PathVariable("id") String id) {
         return exchangeService.findById(id);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("id") String id) {
         exchangeService.deleteById(id);
     }
@@ -74,4 +75,5 @@ public class ExchangeController {
                                                @PathVariable("companyId") String companyId) {
         return exchangeService.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
+
 }

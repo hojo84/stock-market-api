@@ -1,5 +1,7 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.customexception.CompanyNotFoundException;
+import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -29,12 +30,10 @@ public class CompanyService {
     }
 
     public Company save(CreateCompanyDTO createCompanyDTO) {
-        if (createCompanyDTO.getExchangeIds().isEmpty())
-            throw new IllegalArgumentException("No exchangeId has been provided");
         Company newCompanySaved = companyRepository.save(new Company(createCompanyDTO));
         final List<Exchange> exchangeList = createCompanyDTO.getExchangeIds().stream()
                 .map(exchangeId -> exchangeRepository.findById(exchangeId)
-                        .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId)))
+                        .orElseThrow(() -> new ExchangeNotFoundException(exchangeId)))
                 .toList();
         exchangeList.forEach(exchange -> {
             exchange.addCompany(newCompanySaved);
@@ -48,28 +47,28 @@ public class CompanyService {
         return companyRepository.save(companyToBeUpdated);
     }
 
-    public Optional<Company> findById(String id) {
-        return companyRepository.findById(id);
+    public Company findById(String id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     public void deleteById(String id) {
+        findById(id);
         companyRepository.deleteById(id);
     }
 
     public void addCompanyToExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
-        Company companyToBeAdded = findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + companyId));
+                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
+        Company companyToBeAdded = findById(companyId);
         exchange.addCompany(companyToBeAdded);
         exchangeRepository.save(exchange);
     }
 
     public void removeCompanyFromExchangeById(String companyId, String exchangeId) {
         Exchange exchange = exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new IllegalArgumentException("Exchange does not exists: " + exchangeId));
-        Company companyToBeRemoved = findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Company does not exists: " + companyId));
+                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
+        Company companyToBeRemoved = findById(companyId);
         exchange.removeCompany(companyToBeRemoved);
         exchangeRepository.save(exchange);
     }

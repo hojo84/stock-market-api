@@ -1,5 +1,7 @@
 package com.codecool.stockmarketapi.service;
 
+import com.codecool.stockmarketapi.customexception.CompanyNotFoundException;
+import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
@@ -9,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ExchangeService {
@@ -32,20 +33,26 @@ public class ExchangeService {
         return exchangeRepository.save(exchangeToBeSaved);
     }
 
-    public Optional<Exchange> findById(String id) {
-        return exchangeRepository.findById(id);
+    public Exchange findById(String id) {
+        return exchangeRepository.findById(id)
+                .orElseThrow(() -> new ExchangeNotFoundException(id));
     }
 
     public void deleteById(String id) {
+        findById(id);
         exchangeRepository.deleteById(id);
         companyRepository.deleteAllOrphanCompanies();
     }
 
     public List<Company> getAllCompaniesByExchangeId(String id) {
+        findById(id);
         return exchangeRepository.getAllCompaniesByExchangeId(id);
     }
 
     public Company getCompanyByIdAndExchangeId(String exchangeId, String companyId) {
+        findById(exchangeId);
+        companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException(companyId));
         return exchangeRepository.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
 }

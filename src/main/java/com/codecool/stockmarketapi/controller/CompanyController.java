@@ -7,13 +7,13 @@ import com.codecool.stockmarketapi.service.CompanyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -55,11 +55,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Company> findById(@PathVariable("id") String id) {
+    public Company findById(@PathVariable("id") String id) {
         return companyService.findById(id);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("id") String id) {
         companyService.deleteById(id);
     }
@@ -75,4 +76,5 @@ public class CompanyController {
                                               @PathVariable("exchangeId") String exchangeId) {
         companyService.removeCompanyFromExchangeById(companyId, exchangeId);
     }
+
 }
