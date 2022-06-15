@@ -17,9 +17,9 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -83,5 +83,16 @@ public class ExchangeControllerUnitTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo("XNAS")));
+    }
+
+    @Test
+    public void testDeleteExchangeById() throws Exception {
+        String id = "XNAS";
+
+        doNothing().when(exchangeService).deleteById(id);
+
+        mockMvc.perform(delete("/exchanges/{id}", id))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 }
