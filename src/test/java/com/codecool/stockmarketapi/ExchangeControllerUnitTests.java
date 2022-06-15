@@ -2,6 +2,8 @@ package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.ExchangeController;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
+import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -94,5 +97,31 @@ public class ExchangeControllerUnitTests {
         mockMvc.perform(delete("/exchanges/{id}", id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void testGetAllCompaniesByExchangeId() throws Exception {
+        Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "www.nasdaq.com", new HashSet<>());
+        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK,
+                new HashSet<>());
+        Company apple = new Company("AAPL", "Apple", "Information Technology", EquityType.COMMON_STOCK,
+                new HashSet<>());
+
+        nvidia.getExchanges().add(nasdaq);
+        apple.getExchanges().add(nasdaq);
+
+        List<Company> expectedCompanies = List.of(nvidia, apple);
+        String exchangeId = "XNAS";
+
+        when(exchangeService.getAllCompaniesByExchangeId(exchangeId)).thenReturn(expectedCompanies);
+
+        mockMvc.perform(get("/exchanges/{id}/companies", exchangeId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", equalTo(2)))
+                .andExpect(jsonPath("$[0].id", equalTo("NVDA")))
+                .andExpect(jsonPath("$[0].exchanges[0].id", equalTo("XNAS")))
+                .andExpect(jsonPath("$[1].id", equalTo("AAPL")))
+                .andExpect(jsonPath("$[1].exchanges[0].id", equalTo("XNAS")));
     }
 }
