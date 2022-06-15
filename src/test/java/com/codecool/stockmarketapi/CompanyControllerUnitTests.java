@@ -95,4 +95,14 @@ public class CompanyControllerUnitTests {
                 .andExpect(status().isNoContent())
                 .andDo(print());
     }
+
+    @Test
+    public void testAddCompanyToExchange() throws Exception {
+        String companyId = "NVDA";
+        String exchangeId = "NYSE";
+        doNothing().when(companyService).addCompanyToExchangeById(companyId, exchangeId);
+        mockMvc.perform(put("/companies/{companyId}/listings/{exchangeId}", companyId, exchangeId))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
 }
