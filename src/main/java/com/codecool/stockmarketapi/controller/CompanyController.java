@@ -66,12 +66,14 @@ public class CompanyController {
     }
 
     @PutMapping("/{companyId}/listings/{exchangeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addCompanyToExchangeById(@PathVariable("companyId") String companyId,
                                          @PathVariable("exchangeId") String exchangeId) {
         companyService.addCompanyToExchangeById(companyId, exchangeId);
     }
 
     @DeleteMapping("/{companyId}/listings/{exchangeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeCompanyFromExchangeById(@PathVariable("companyId") String companyId,
                                               @PathVariable("exchangeId") String exchangeId) {
         companyService.removeCompanyFromExchangeById(companyId, exchangeId);
