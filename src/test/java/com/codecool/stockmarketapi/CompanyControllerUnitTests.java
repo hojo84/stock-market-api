@@ -105,4 +105,14 @@ public class CompanyControllerUnitTests {
                 .andExpect(status().isNoContent())
                 .andDo(print());
     }
+
+    @Test
+    public void testRemoveCompanyFromExchange() throws Exception {
+        String companyId = "NVDA";
+        String exchangeId = "NYSE";
+        doNothing().when(companyService).removeCompanyFromExchangeById(companyId, exchangeId);
+        mockMvc.perform(delete("/companies/{companyId}/listings/{exchangeId}", companyId, exchangeId))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
 }
