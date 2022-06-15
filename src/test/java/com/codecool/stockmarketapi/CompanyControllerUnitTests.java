@@ -19,9 +19,9 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -87,4 +87,12 @@ public class CompanyControllerUnitTests {
                 .andExpect(jsonPath("$.id", equalTo("NVDA")));
     }
 
+    @Test
+    public void testDeleteCompany() throws Exception {
+        String id = "NVDA";
+        doNothing().when(companyService).deleteById(id);
+        mockMvc.perform(delete("/companies/{id}", id))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
 }
