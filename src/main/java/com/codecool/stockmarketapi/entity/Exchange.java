@@ -1,7 +1,7 @@
 package com.codecool.stockmarketapi.entity;
 
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +37,7 @@ public class Exchange {
             inverseJoinColumns = @JoinColumn(name = "company_id"),
             inverseForeignKey = @ForeignKey(name = "fk_listings_companies")
     )
-    @JsonBackReference("exchange-company")
+    @JsonIgnore
     private Set<Company> companies;
 
     public Exchange(ExchangeDTO exchangeDTO) {

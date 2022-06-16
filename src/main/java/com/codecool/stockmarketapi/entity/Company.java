@@ -2,7 +2,6 @@ package com.codecool.stockmarketapi.entity;
 
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +30,6 @@ public class Company {
     private EquityType equityType;
 
     @ManyToMany(mappedBy = "companies")
-    @JsonManagedReference("exchange-company")
     private Set<Exchange> exchanges = new HashSet<>();
 
     public Company(CreateCompanyDTO createCompanyDTO) {
