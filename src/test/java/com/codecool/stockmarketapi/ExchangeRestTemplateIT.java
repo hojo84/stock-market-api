@@ -54,9 +54,7 @@ public class ExchangeRestTemplateIT {
 
     @Test
     void testReturnCreatedExchangeIfNewExchangePosted() {
-        ExchangeDTO response = testRestTemplate.postForObject(url,
-                exchangeDTOs.get(0),
-                ExchangeDTO.class);
+        ExchangeDTO response = postExchange(url, exchangeDTOs.get(0));
 
         assertEquals(exchangeDTOs.get(0).getId(), response.getId());
         assertEquals(exchangeDTOs.get(0).getName(), response.getName());
@@ -65,15 +63,8 @@ public class ExchangeRestTemplateIT {
 
     @Test
     void testReturnAllExchangesIfDatabaseHasContent() {
-        ExchangeDTO exchangeDtoReturned = testRestTemplate.postForObject(url,
-                exchangeDTOs.get(0),
-                ExchangeDTO.class);
-
-        assertEquals(exchangeDTOs.get(0).getName(), exchangeDtoReturned.getName());
-
-        testRestTemplate.postForObject(url,
-                exchangeDTOs.get(1),
-                ExchangeDTO.class);
+        postExchange(url, exchangeDTOs.get(0));
+        postExchange(url, exchangeDTOs.get(1));
 
         final List<String> exchanges = testRestTemplate.exchange(url,
                         HttpMethod.GET,
@@ -83,5 +74,11 @@ public class ExchangeRestTemplateIT {
                 .getBody();
 
         assertThat(exchanges).containsExactly("Nasdaq Stock Market (XNAS)", "Vienna Stock Exchange (VSE)");
+    }
+
+    private ExchangeDTO postExchange(String url, ExchangeDTO exchangeDTO) {
+        return testRestTemplate.postForObject(url,
+                exchangeDTO,
+                ExchangeDTO.class);
     }
 }
