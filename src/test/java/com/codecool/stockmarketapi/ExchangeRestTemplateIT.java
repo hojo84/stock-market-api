@@ -29,11 +29,16 @@ public class ExchangeRestTemplateIT {
     CompanyRepository companyRepository;
 
     private String url;
+    private List<ExchangeDTO> exchangeDTOs;
 
     @BeforeEach
     void setUp() {
         resetRepositories();
         url = "/exchanges";
+        exchangeDTOs = List.of(
+                new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
+                new ExchangeDTO("VSE", "Vienna Stock Exchange", "Vienna", "EUR", "www.wienerborse.at")
+        );
     }
 
     private void resetRepositories() {
@@ -49,14 +54,14 @@ public class ExchangeRestTemplateIT {
 
     @Test
     void testReturnAllExchangesIfDatabaseHasContent() {
-        ExchangeDTO exchangeDTO = testRestTemplate.postForObject(url,
-                new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
+        ExchangeDTO exchangeDtoReturned = testRestTemplate.postForObject(url,
+                exchangeDTOs.get(0),
                 ExchangeDTO.class);
 
-        assertEquals("Nasdaq Stock Market", exchangeDTO.getName());
+        assertEquals(exchangeDTOs.get(0).getName(), exchangeDtoReturned.getName());
 
         testRestTemplate.postForObject(url,
-                new ExchangeDTO("VSE", "Vienna Stock Exchange", "Vienna", "EUR", "www.wienerborse.at"),
+                exchangeDTOs.get(1),
                 ExchangeDTO.class);
 
         final List<String> exchanges = testRestTemplate.exchange(url,
