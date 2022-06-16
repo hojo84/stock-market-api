@@ -42,7 +42,7 @@ public class ExchangeRestTemplateIT {
     }
 
     @Test
-    void testListExchanges() {
+    void testReturnAllExchangesIfDatabaseHasContent() {
         ExchangeDTO exchangeDTO = testRestTemplate.postForObject(url,
                 new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
                 ExchangeDTO.class);
