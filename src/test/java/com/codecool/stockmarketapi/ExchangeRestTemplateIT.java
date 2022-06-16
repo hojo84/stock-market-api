@@ -28,9 +28,12 @@ public class ExchangeRestTemplateIT {
     @Autowired
     CompanyRepository companyRepository;
 
+    private String url;
+
     @BeforeEach
     void setUp() {
         resetRepositories();
+        url = "/exchanges";
     }
 
     private void resetRepositories() {
@@ -40,17 +43,17 @@ public class ExchangeRestTemplateIT {
 
     @Test
     void testListExchanges() {
-        ExchangeDTO exchangeDTO = testRestTemplate.postForObject("/exchanges",
+        ExchangeDTO exchangeDTO = testRestTemplate.postForObject(url,
                 new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
                 ExchangeDTO.class);
 
         assertEquals("Nasdaq Stock Market", exchangeDTO.getName());
 
-        testRestTemplate.postForObject("/exchanges",
+        testRestTemplate.postForObject(url,
                 new ExchangeDTO("VSE", "Vienna Stock Exchange", "Vienna", "EUR", "www.wienerborse.at"),
                 ExchangeDTO.class);
 
-        final List<String> exchanges = testRestTemplate.exchange("/exchanges",
+        final List<String> exchanges = testRestTemplate.exchange(url,
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<List<String>>() {
