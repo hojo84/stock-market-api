@@ -77,6 +77,25 @@ public class ExchangeRestTemplateIT {
         assertThat(exchanges).containsExactly("Nasdaq Stock Market (XNAS)", "Vienna Stock Exchange (VSE)");
     }
 
+    @Test
+    void testReturnUpdatedExchangeIfNewExchangeIsPostedAndUpdated() {
+        final Exchange origExchange = postExchange(url, exchangeDTOs.get(0));
+
+        ExchangeDTO renamedExchangeDTO = new ExchangeDTO(
+                origExchange.getId(),
+                "Renamed Nasdaq",
+                origExchange.getLocation(),
+                origExchange.getCurrency(),
+                origExchange.getWebsite()
+        );
+
+        testRestTemplate.put(url + "/" + renamedExchangeDTO.getId(), renamedExchangeDTO);
+
+        final Exchange updatedExchange = testRestTemplate.getForObject(url + "/" + renamedExchangeDTO.getId(), Exchange.class);
+
+        assertEquals("Renamed Nasdaq", updatedExchange.getName());
+    }
+
     private Exchange postExchange(String url, ExchangeDTO exchangeDTO) {
         HttpEntity<ExchangeDTO> httpEntity = createHttpEntity(exchangeDTO);
         final ResponseEntity<Exchange> postResponse = testRestTemplate.postForEntity(url, httpEntity, Exchange.class);
