@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
+import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.*;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ExchangeRestTemplateIT {
 
     @Test
     void testReturnCreatedExchangeIfNewExchangePosted() {
-        ExchangeDTO response = postExchange(url, exchangeDTOs.get(0));
+        Exchange response = postExchange(url, exchangeDTOs.get(0));
 
         assertEquals(exchangeDTOs.get(0).getId(), response.getId());
         assertEquals(exchangeDTOs.get(0).getName(), response.getName());
@@ -76,9 +77,17 @@ public class ExchangeRestTemplateIT {
         assertThat(exchanges).containsExactly("Nasdaq Stock Market (XNAS)", "Vienna Stock Exchange (VSE)");
     }
 
-    private ExchangeDTO postExchange(String url, ExchangeDTO exchangeDTO) {
-        return testRestTemplate.postForObject(url,
-                exchangeDTO,
-                ExchangeDTO.class);
+    private Exchange postExchange(String url, ExchangeDTO exchangeDTO) {
+        HttpEntity<ExchangeDTO> httpEntity = createHttpEntity(exchangeDTO);
+        final ResponseEntity<Exchange> postResponse = testRestTemplate.postForEntity(url, httpEntity, Exchange.class);
+        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
+        return postResponse.getBody();
+    }
+
+    private HttpEntity<ExchangeDTO> createHttpEntity(ExchangeDTO exchangeDTO) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<ExchangeDTO> httpEntity = new HttpEntity<>(exchangeDTO, httpHeaders);
+        return httpEntity;
     }
 }
