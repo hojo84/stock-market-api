@@ -42,6 +42,12 @@ public class ExchangeRestTemplateIT {
     }
 
     @Test
+    void testReturnEmptyJsonIfEmptyDatabase() {
+        final String result = testRestTemplate.getForObject(url, String.class);
+        assertEquals("[]", result);
+    }
+
+    @Test
     void testReturnAllExchangesIfDatabaseHasContent() {
         ExchangeDTO exchangeDTO = testRestTemplate.postForObject(url,
                 new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
