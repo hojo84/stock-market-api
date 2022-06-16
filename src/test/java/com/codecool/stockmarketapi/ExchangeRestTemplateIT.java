@@ -47,10 +47,21 @@ public class ExchangeRestTemplateIT {
     }
 
     @Test
-    void testReturnEmptyJsonIfEmptyDatabase() {
+    void testReturnEmptyJsonIfDatabaseIsEmpty() {
         final String result = testRestTemplate.getForObject(url, String.class);
         assertEquals("[]", result);
     }
+
+    @Test
+    void testReturnCreatedExchangeIfNewExchangePosted() {
+        ExchangeDTO response = testRestTemplate.postForObject(url,
+                exchangeDTOs.get(0),
+                ExchangeDTO.class);
+
+        assertEquals(exchangeDTOs.get(0).getId(), response.getId());
+        assertEquals(exchangeDTOs.get(0).getName(), response.getName());
+    }
+
 
     @Test
     void testReturnAllExchangesIfDatabaseHasContent() {
