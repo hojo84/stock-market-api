@@ -3,6 +3,7 @@ package com.codecool.stockmarketapi;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,11 +28,18 @@ public class ExchangeRestTemplateIT {
     @Autowired
     CompanyRepository companyRepository;
 
-    @Test
-    void testListExchanges() {
+    @BeforeEach
+    void setUp() {
+        resetRepositories();
+    }
+
+    private void resetRepositories() {
         exchangeRepository.deleteAll();
         companyRepository.deleteAll();
+    }
 
+    @Test
+    void testListExchanges() {
         ExchangeDTO exchangeDTO = testRestTemplate.postForObject("/exchanges",
                 new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
                 ExchangeDTO.class);
