@@ -96,6 +96,27 @@ public class ExchangeRestTemplateIT {
         assertEquals("Renamed Nasdaq", updatedExchange.getName());
     }
 
+    @Test
+    void testReturnOneLessIfNewExchangeIsPostedAndDeleted() {
+        final String[] exchangesBeforePost = testRestTemplate.getForObject(url, String[].class);
+        assertThat(exchangesBeforePost.length).isEqualTo(0);
+
+        postExchange(url, exchangeDTOs.get(0));
+        postExchange(url, exchangeDTOs.get(1));
+
+        testRestTemplate.delete(url + "/" + exchangeDTOs.get(0).getId());
+
+        final List<String> exchangesAfterTwoPostsAndOneDelete = testRestTemplate.exchange(url,
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<List<String>>() {
+                        })
+                .getBody();
+
+        assertThat(exchangesAfterTwoPostsAndOneDelete).hasSize(1);
+        assertThat(exchangesAfterTwoPostsAndOneDelete).containsExactly("Vienna Stock Exchange (VSE)");
+    }
+
     private Exchange postExchange(String url, ExchangeDTO exchangeDTO) {
         HttpEntity<ExchangeDTO> httpEntity = createHttpEntity(exchangeDTO);
         final ResponseEntity<Exchange> postResponse = testRestTemplate.postForEntity(url, httpEntity, Exchange.class);
