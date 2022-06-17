@@ -4,6 +4,8 @@ import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.service.ExchangeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exchanges")
+@Tag(name = "Operations on exchanges")
 public class ExchangeController {
 
     private final ExchangeService exchangeService;
@@ -29,11 +32,13 @@ public class ExchangeController {
     }
 
     @GetMapping
+    @Operation(summary = "Lists all exchanges")
     public List<String> listAll() {
         return exchangeService.listAll();
     }
 
     @PostMapping
+    @Operation(summary = "Creates an exchange")
     public ResponseEntity<Exchange> save(@Valid @RequestBody ExchangeDTO exchangeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("INVALID EXCHANGE INPUT");
@@ -44,6 +49,7 @@ public class ExchangeController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Updates an existing exchange by id")
     public ResponseEntity<Exchange> update(@PathVariable("id") String id, @Valid @RequestBody ExchangeDTO exchangeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("INVALID EXCHANGE INPUT");
@@ -55,22 +61,26 @@ public class ExchangeController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Finds exchange by id")
     public Exchange findById(@PathVariable("id") String id) {
         return exchangeService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Deletes exchange by id")
     public void deleteById(@PathVariable("id") String id) {
         exchangeService.deleteById(id);
     }
 
     @GetMapping("/{id}/companies")
+    @Operation(summary = "List all companies by exchange id")
     public List<Company> getAllCompaniesByExchangeId(@PathVariable("id") String id) {
         return exchangeService.getAllCompaniesByExchangeId(id);
     }
 
     @GetMapping("/{exchangeId}/companies/{companyId}")
+    @Operation(summary = "Finds a particular company by id on a given exchange")
     public Company getCompanyByIdAndExchangeId(@PathVariable("exchangeId") String exchangeId,
                                                @PathVariable("companyId") String companyId) {
         return exchangeService.getCompanyByIdAndExchangeId(exchangeId, companyId);
