@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.dto;
 
 import com.codecool.stockmarketapi.entity.EquityType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class UpdateCompanyDTO {
 
     @NotBlank(message = "Company id must not be null or blank")

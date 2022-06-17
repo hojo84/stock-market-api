@@ -1,5 +1,6 @@
 package com.codecool.stockmarketapi.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ExchangeDTO {
 
     @NotBlank(message = "Exchange id must not be null or blank")
