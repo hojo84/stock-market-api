@@ -48,6 +48,12 @@ public class CompanyRestTemplateIT {
     }
 
     @Test
+    void testReturnEmptyJsonIfDatabaseIsEmpty() {
+        final String result = testRestTemplate.getForObject(url, String.class);
+        assertEquals("[]", result);
+    }
+
+    @Test
     void testReturnUpdatedCompanyIfNewCompanyIsPostedAndUpdated() {
         final ExchangeDTO newExchange = new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com");
         testRestTemplate.postForObject("/exchanges",
