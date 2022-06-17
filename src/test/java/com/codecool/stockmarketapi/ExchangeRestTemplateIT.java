@@ -1,6 +1,9 @@
 package com.codecool.stockmarketapi;
 
+import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
+import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -13,6 +16,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -115,6 +119,26 @@ public class ExchangeRestTemplateIT {
 
         assertThat(exchangesAfterTwoPostsAndOneDelete).hasSize(1);
         assertThat(exchangesAfterTwoPostsAndOneDelete).containsExactly("Vienna Stock Exchange (VSE)");
+    }
+
+    @Test
+    void testReturnCompanyByIdAndExchangeIdIfExchangeAndCompanyPostedToDatabase() {
+        postExchange(url, exchangeDTOs.get(0));
+        String exchangeId = exchangeDTOs.get(0).getId();
+
+        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK,
+                Set.of(exchangeId));
+
+        testRestTemplate.postForObject("/companies", newCompany, Company.class);
+
+
+        String companyId = newCompany.getId();
+
+        final Company response = testRestTemplate.getForObject(url + "/{exchangeId}/companies/{companyId}", Company.class, exchangeId, companyId);
+
+        assertThat(response.getName()).isEqualTo("Nvidia");
+        assertThat(response.getSector()).isEqualTo("IT");
+        assertThat(response.getExchanges()).hasSize(1);
     }
 
     private Exchange postExchange(String url, ExchangeDTO exchangeDTO) {
