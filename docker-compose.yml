@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  stockmarketdb:
+    image: postgres:14.3-alpine
+    container_name: stockmarketdb
+    environment:
+      POSTGRES_DB: stockmarket_db
+      POSTGRES_USER: broker
+      POSTGRES_PASSWORD: broker
+    ports:
+      - "5433:5432"
+
+  my-stockmarket-app:
+    image: hojo84-stockmarketapp
+    build:
+      context: .
+    container_name: my-stockmarket-app
+    depends_on:
+      - stockmarketdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stockmarketdb:5432/stockmarket_db
+      - SPRING_DATASOURCE_USERNAME=broker
+      - SPRING_DATASOURCE_PASSWORD=broker
+    ports:
+      - "8080:8080"
