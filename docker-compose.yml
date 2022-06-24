@@ -13,6 +13,9 @@ services:
 
   my-stockmarket-app:
     image: hojo84-stockmarketapp
+    build:
+      context: .
+    container_name: my-stockmarket-app
     depends_on:
       - stockmarketdb
     environment:
