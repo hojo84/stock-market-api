@@ -51,7 +51,7 @@ public class ExchangeController {
     @PutMapping("/{id}")
     @Operation(summary = "Updates an existing exchange by id")
     public ResponseEntity<Exchange> update(@PathVariable("id") String id, @Valid @RequestBody ExchangeDTO exchangeDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || !id.equals(exchangeDTO.getId())) {
             logger.error("INVALID EXCHANGE INPUT");
             bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
             return ResponseEntity.badRequest().build();

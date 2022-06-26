@@ -51,7 +51,7 @@ public class CompanyController {
     @PutMapping("/{id}")
     @Operation(summary = "Updates an existing company by id")
     public ResponseEntity<Company> update(@PathVariable("id") String id, @Valid @RequestBody UpdateCompanyDTO updateCompanyDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || !id.equals(updateCompanyDTO.getId())) {
             logger.error("INVALID COMPANY INPUT");
             bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
             return ResponseEntity.badRequest().build();
