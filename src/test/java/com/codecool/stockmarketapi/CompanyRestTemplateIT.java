@@ -55,7 +55,7 @@ public class CompanyRestTemplateIT {
 
     @Test
     void testReturnUpdatedCompanyIfNewCompanyIsPostedAndUpdated() {
-        final ExchangeDTO newExchange = new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com");
+        final ExchangeDTO newExchange = new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "https://www.nasdaq.com");
         testRestTemplate.postForObject("/exchanges",
                 newExchange,
                 ExchangeDTO.class);

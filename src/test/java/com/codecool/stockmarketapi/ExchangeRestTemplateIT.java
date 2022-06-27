@@ -41,8 +41,8 @@ public class ExchangeRestTemplateIT {
         resetRepositories();
         url = "/exchanges";
         exchangeDTOs = List.of(
-                new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "www.nasdaq.com"),
-                new ExchangeDTO("VSE", "Vienna Stock Exchange", "Vienna", "EUR", "www.wienerborse.at")
+                new ExchangeDTO("XNAS", "Nasdaq Stock Market", "New York", "USD", "https://www.nasdaq.com"),
+                new ExchangeDTO("VSE", "Vienna Stock Exchange", "Vienna", "EUR", "https://www.wienerborse.at")
         );
     }
 

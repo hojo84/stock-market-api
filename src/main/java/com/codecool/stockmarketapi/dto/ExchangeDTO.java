@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotBlank;
 
@@ -30,6 +31,7 @@ public class ExchangeDTO {
     @Length(min = 3, max = 3, message = "Exchange currency must be a three-letter alphabetic code")
     private String currency;
 
-    @Schema(description = "official website of the exchange", example = "www.wienerborse.at")
+    @Schema(description = "official website of the exchange", example = "https://www.wienerborse.at")
+    @URL
     private String website;
 }

@@ -58,7 +58,7 @@ public class ExchangeControllerUnitTests {
 
     @Test
     public void testFindExchangeById() throws Exception {
-        Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "www.nasdaq.com",
+        Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
                 Collections.emptySet());
 
         when(exchangeService.findById(expected.getId())).thenReturn(expected);
@@ -69,14 +69,14 @@ public class ExchangeControllerUnitTests {
                 .andExpect(jsonPath("$.name", equalTo("Nasdaq")))
                 .andExpect(jsonPath("$.location", equalTo("New York")))
                 .andExpect(jsonPath("$.currency", equalTo("USD")))
-                .andExpect(jsonPath("$.website", equalTo("www.nasdaq.com")));
+                .andExpect(jsonPath("$.website", equalTo("https://www.nasdaq.com")));
     }
 
     @Test
     public void testSaveExchange() throws Exception {
-        Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "www.nasdaq.com",
+        Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
                 Collections.emptySet());
-        ExchangeDTO exchangeDTO = new ExchangeDTO("XNAS", "Nasdaq", "New York", "USD", "www.nasdaq.com");
+        ExchangeDTO exchangeDTO = new ExchangeDTO("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com");
 
         when(exchangeService.save(any())).thenReturn(expected);
 
@@ -101,7 +101,7 @@ public class ExchangeControllerUnitTests {
 
     @Test
     public void testGetAllCompaniesByExchangeId() throws Exception {
-        Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "www.nasdaq.com", new HashSet<>());
+        Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com", new HashSet<>());
         Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK,
                 new HashSet<>());
         Company apple = new Company("AAPL", "Apple", "Information Technology", EquityType.COMMON_STOCK,
