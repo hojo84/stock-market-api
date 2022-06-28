@@ -5,6 +5,10 @@ import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +28,7 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    Logger logger = LoggerFactory.getLogger(CompanyController.class);
+    private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -39,6 +43,10 @@ public class CompanyController {
 
     @PostMapping
     @Operation(summary = "Creates a company")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Company.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     public ResponseEntity<Company> save(@Valid @RequestBody CreateCompanyDTO createCompanyDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("INVALID COMPANY INPUT");
@@ -50,6 +58,11 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Updates an existing company by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Company.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
     public ResponseEntity<Company> update(@PathVariable("id") String id, @Valid @RequestBody UpdateCompanyDTO updateCompanyDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors() || !id.equals(updateCompanyDTO.getId())) {
             logger.error("INVALID COMPANY INPUT");
@@ -62,6 +75,10 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Finds company by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Company.class))}),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
     public Company findById(@PathVariable("id") String id) {
         return companyService.findById(id);
     }
@@ -69,6 +86,9 @@ public class CompanyController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Deletes company by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
     public void deleteById(@PathVariable("id") String id) {
         companyService.deleteById(id);
     }
@@ -76,6 +96,9 @@ public class CompanyController {
     @PutMapping("/{companyId}/listings/{exchangeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Assigns company by id to given exchange")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
     public void addCompanyToExchangeById(@PathVariable("companyId") String companyId,
                                          @PathVariable("exchangeId") String exchangeId) {
         companyService.addCompanyToExchangeById(companyId, exchangeId);
@@ -84,6 +107,9 @@ public class CompanyController {
     @DeleteMapping("/{companyId}/listings/{exchangeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Removes company by id from given exchange")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
     public void removeCompanyFromExchangeById(@PathVariable("companyId") String companyId,
                                               @PathVariable("exchangeId") String exchangeId) {
         companyService.removeCompanyFromExchangeById(companyId, exchangeId);
