@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "60ff00d7-fd6b-4a67-877a-44e27e0bb813",
+		"name": "Stock Market API Test Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19632546"
+	},
+	"item": [
+		{
+			"name": "Exchange test suite",
+			"item": [
+				{
+					"name": "List all exchanges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"exchanges_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exchanges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add exchange",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"exchange_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"AWEX\",\n    \"name\": \"Australian Wool Exchange\",\n    \"location\": \"Lane Cove\",\n    \"currency\": \"AUD\",\n    \"website\": \"https://www.awex.com.au\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exchanges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List exchanges after one post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Exchanges length has been increased after post request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var prevExchangesLength = pm.collectionVariables.get(\"exchanges_length\");",
+									"    pm.expect(jsonData.length).to.eql(prevExchangesLength + 1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exchanges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete exchange",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204 (no content)\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exchanges/{{exchange_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges",
+								"{{exchange_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List exchanges after deletion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Exchanges length has decreased after delete\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var origExchangesLength = pm.collectionVariables.get(\"exchanges_length\");",
+									"    pm.expect(jsonData.length).to.eql(origExchangesLength);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/exchanges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company test suite",
+			"item": [
+				{
+					"name": "List all companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"companies_length\", jsonData.length);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add exchange",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"NYSE\",\n    \"name\": \"New York Stock Exchange\",\n    \"location\": \"New York\",\n    \"currency\": \"USD\",\n    \"website\": \"https://www.nyse.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/exchanges",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"company_id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"T\",\n    \"name\": \"AT&T Inc\",\n    \"sector\": \"Communication\",\n    \"equityType\": \"COMMON_STOCK\",\n    \"exchangeIds\": [\n        \"NYSE\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List companies after one post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Companies length has increased after post request\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var prevCompaniesLength = pm.collectionVariables.get(\"companies_length\");",
+									"    pm.expect(jsonData.length).to.eql(prevCompaniesLength + 1);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete company",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204 (no content)\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies/{{company_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies",
+								"{{company_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List companies after deletion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Companies length has decreased after delete\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var origCompaniesLength = pm.collectionVariables.get(\"companies_length\");",
+									"    pm.expect(jsonData.length).to.eql(origCompaniesLength);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	]
+}
