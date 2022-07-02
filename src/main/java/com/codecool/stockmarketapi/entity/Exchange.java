@@ -29,6 +29,10 @@ public class Exchange {
 
     private String website;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
+    private Country country;
+
     @ManyToMany
     @JoinTable(
             name = "listings",
