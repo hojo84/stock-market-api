@@ -3,6 +3,7 @@ package com.codecool.stockmarketapi;
 import com.codecool.stockmarketapi.controller.ExchangeController;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.Country;
 import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.service.ExchangeService;
@@ -39,6 +40,8 @@ public class ExchangeControllerUnitTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private final Country unitedStates = new Country(1L, "United States");
+
     @Test
     public void testFindAllExchanges() throws Exception {
         List<String> expectedExchanges = List.of(
@@ -59,7 +62,7 @@ public class ExchangeControllerUnitTests {
     @Test
     public void testFindExchangeById() throws Exception {
         Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
-                Collections.emptySet());
+                unitedStates, Collections.emptySet());
 
         when(exchangeService.findById(expected.getId())).thenReturn(expected);
 
@@ -75,7 +78,7 @@ public class ExchangeControllerUnitTests {
     @Test
     public void testSaveExchange() throws Exception {
         Exchange expected = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
-                Collections.emptySet());
+                unitedStates, Collections.emptySet());
         ExchangeDTO exchangeDTO = new ExchangeDTO("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com");
 
         when(exchangeService.save(any())).thenReturn(expected);
@@ -101,7 +104,8 @@ public class ExchangeControllerUnitTests {
 
     @Test
     public void testGetAllCompaniesByExchangeId() throws Exception {
-        Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com", new HashSet<>());
+        Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
+                unitedStates, new HashSet<>());
         Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK,
                 new HashSet<>());
         Company apple = new Company("AAPL", "Apple", "Information Technology", EquityType.COMMON_STOCK,
