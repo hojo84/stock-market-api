@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.Country;
 import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -28,6 +29,8 @@ public class ExchangeServiceUnitTests {
 
     @Autowired
     private ExchangeService exchangeService;
+
+    private final Country hungary = new Country(1L, "Hungary");
 
     @Test
     void testReturnAllExchanges() {
@@ -58,6 +61,7 @@ public class ExchangeServiceUnitTests {
                 "Budapest",
                 "HUF",
                 "bet.hu",
+                hungary,
                 Collections.emptySet());
         String exchangeId = "BUD";
 
