@@ -4,10 +4,7 @@ import com.codecool.stockmarketapi.dto.CreateCountryDTO;
 import com.codecool.stockmarketapi.entity.Country;
 import com.codecool.stockmarketapi.service.CountryService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/countries")
@@ -19,5 +16,11 @@ public class CountryController {
     @PostMapping
     public Country save(@RequestBody CreateCountryDTO createCountryDTO) {
         return countryService.save(createCountryDTO);
+    }
+
+    @PutMapping("/{countryId}/addExchange/{exchangeId}")
+    public void addExchangeToCountryById(@PathVariable("countryId") Long countryId,
+                                         @PathVariable("exchangeId") String exchangeId) {
+        countryService.addExchangeToCountryById(countryId, exchangeId);
     }
 }
