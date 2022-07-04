@@ -22,4 +22,8 @@ public class Country {
 
     @NaturalId
     private String name;
+
+    public Country(String name) {
+        this.name = name;
+    }
 }
