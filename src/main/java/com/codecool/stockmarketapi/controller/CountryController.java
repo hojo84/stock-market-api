@@ -4,6 +4,7 @@ import com.codecool.stockmarketapi.dto.CreateCountryDTO;
 import com.codecool.stockmarketapi.entity.Country;
 import com.codecool.stockmarketapi.service.CountryService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class CountryController {
     }
 
     @PutMapping("/{countryId}/addExchange/{exchangeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addExchangeToCountryById(@PathVariable("countryId") Long countryId,
                                          @PathVariable("exchangeId") String exchangeId) {
         countryService.addExchangeToCountryById(countryId, exchangeId);
