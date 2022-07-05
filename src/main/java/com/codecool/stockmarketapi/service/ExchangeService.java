@@ -60,8 +60,7 @@ public class ExchangeService {
 
     public Company getCompanyByIdAndExchangeId(String exchangeId, String companyId) {
         findById(exchangeId);
-        companyRepository.findById(companyId)
+        return exchangeRepository.getCompanyByIdAndExchangeId(exchangeId, companyId)
                 .orElseThrow(() -> new CompanyNotFoundException(companyId));
-        return exchangeRepository.getCompanyByIdAndExchangeId(exchangeId, companyId);
     }
 }

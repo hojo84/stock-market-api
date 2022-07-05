@@ -28,8 +28,8 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
     @Query("select c from Exchange e join e.companies l join l.company c where e.id=?1")
     List<Company> getAllCompaniesByExchangeId(String id);
 
-    @Query("select c from Exchange e join e.companies c where e.id=:exchangeId and c.id=:companyId")
-    Company getCompanyByIdAndExchangeId(@Param("exchangeId") String exchangeId, @Param("companyId") String companyId);
+    @Query("select c from Exchange e join e.companies l join l.company c where e.id=:exchangeId and c.id=:companyId")
+    Optional<Company> getCompanyByIdAndExchangeId(@Param("exchangeId") String exchangeId, @Param("companyId") String companyId);
 
     @Modifying
     @Transactional
