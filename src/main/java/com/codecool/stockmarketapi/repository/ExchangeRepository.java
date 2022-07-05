@@ -25,7 +25,7 @@ public interface ExchangeRepository extends JpaRepository<Exchange, String> {
 
     void deleteById(String id);
 
-    @Query("select c from Exchange e join e.companies c where e.id=?1")
+    @Query("select c from Exchange e join e.companies l join l.company c where e.id=?1")
     List<Company> getAllCompaniesByExchangeId(String id);
 
     @Query("select c from Exchange e join e.companies c where e.id=:exchangeId and c.id=:companyId")
