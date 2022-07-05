@@ -10,12 +10,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "exchanges")
 public class Exchange {
@@ -35,7 +36,7 @@ public class Exchange {
     @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
     private Country country;
 
-    @OneToMany(mappedBy = "exchange")
+    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Listing> companies = new HashSet<>();
 
@@ -63,5 +64,18 @@ public class Exchange {
                 listing.setCompany(null);
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exchange that = (Exchange) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,12 +1,15 @@
 package com.codecool.stockmarketapi.entity;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "listings")
 public class Listing {
@@ -26,5 +29,18 @@ public class Listing {
         this.exchange = exchange;
         this.company = company;
         this.id = new ListingId(exchange.getId(), company.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Listing that = (Listing) o;
+        return Objects.equals(exchange, that.exchange) && Objects.equals(company, that.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exchange, company);
     }
 }
