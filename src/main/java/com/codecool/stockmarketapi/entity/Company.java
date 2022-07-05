@@ -2,10 +2,7 @@ package com.codecool.stockmarketapi.entity;
 
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "companies")
 public class Company {
@@ -29,8 +27,8 @@ public class Company {
     @Enumerated(EnumType.STRING)
     private EquityType equityType;
 
-    @ManyToMany(mappedBy = "companies")
-    private Set<Exchange> exchanges = new HashSet<>();
+    @OneToMany(mappedBy = "company")
+    private Set<Listing> exchanges = new HashSet<>();
 
     public Company(CreateCompanyDTO createCompanyDTO) {
         this.id = createCompanyDTO.getId();

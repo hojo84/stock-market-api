@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 @Getter
@@ -33,16 +35,9 @@ public class Exchange {
     @JoinColumn(name = "country_id", foreignKey = @ForeignKey(name = "fk_exchanges_countries"))
     private Country country;
 
-    @ManyToMany
-    @JoinTable(
-            name = "listings",
-            joinColumns = @JoinColumn(name = "exchange_id"),
-            foreignKey = @ForeignKey(name = "fk_listings_exchanges"),
-            inverseJoinColumns = @JoinColumn(name = "company_id"),
-            inverseForeignKey = @ForeignKey(name = "fk_listings_companies")
-    )
+    @OneToMany(mappedBy = "exchange")
     @JsonIgnore
-    private Set<Company> companies;
+    private Set<Listing> companies = new HashSet<>();
 
     public Exchange(ExchangeDTO exchangeDTO) {
         this.id = exchangeDTO.getId();
@@ -53,12 +48,20 @@ public class Exchange {
     }
 
     public void addCompany(Company company) {
-        companies.add(company);
-        company.getExchanges().add(this);
+        Listing listing = new Listing(this, company);
+        companies.add(listing);
+        company.getExchanges().add(listing);
     }
 
     public void removeCompany(Company company) {
-        companies.remove(company);
-        company.getExchanges().remove(this);
+        for (Iterator<Listing> iterator = companies.iterator(); iterator.hasNext(); ) {
+            Listing listing = iterator.next();
+            if (listing.getExchange().equals(this) && listing.getCompany().equals(company)) {
+                iterator.remove();
+                listing.getCompany().getExchanges().remove(listing);
+                listing.setExchange(null);
+                listing.setCompany(null);
+            }
+        }
     }
 }
