@@ -8,6 +8,7 @@ import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
+import com.codecool.stockmarketapi.repository.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,13 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final ExchangeRepository exchangeRepository;
+    private ListingRepository listingRepository;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, ExchangeRepository exchangeRepository) {
+    public CompanyService(CompanyRepository companyRepository, ExchangeRepository exchangeRepository, ListingRepository listingRepository) {
         this.companyRepository = companyRepository;
         this.exchangeRepository = exchangeRepository;
+        this.listingRepository = listingRepository;
     }
 
     public List<String> listAll() {
@@ -69,10 +72,9 @@ public class CompanyService {
     }
 
     public void removeCompanyFromExchangeById(String companyId, String exchangeId) {
-        Exchange exchange = exchangeRepository.findById(exchangeId)
+        exchangeRepository.findById(exchangeId)
                 .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
-        Company companyToBeRemoved = findById(companyId);
-        exchange.removeCompany(companyToBeRemoved);
-        exchangeRepository.save(exchange);
+        findById(companyId);
+        listingRepository.removeCompanyFromExchangeById(companyId, exchangeId);
     }
 }
