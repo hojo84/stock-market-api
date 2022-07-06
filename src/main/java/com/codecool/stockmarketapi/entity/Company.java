@@ -31,7 +31,7 @@ public class Company {
     @Enumerated(EnumType.STRING)
     private EquityType equityType;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Listing> exchanges = new HashSet<>();
 

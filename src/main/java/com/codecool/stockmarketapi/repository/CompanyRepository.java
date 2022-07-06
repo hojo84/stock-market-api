@@ -21,10 +21,6 @@ public interface CompanyRepository extends JpaRepository<Company, String> {
     Optional<Company> findById(String id);
 
     @Modifying
-    @Query("delete from Company c where c.id=?1")
-    void deleteById(String id);
-
-    @Modifying
     @Query("delete from Company c where c.exchanges is empty")
     @Transactional
     void deleteAllOrphanCompanies();
