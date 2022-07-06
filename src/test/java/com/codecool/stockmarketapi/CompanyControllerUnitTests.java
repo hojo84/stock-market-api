@@ -3,7 +3,6 @@ package com.codecool.stockmarketapi;
 import com.codecool.stockmarketapi.controller.CompanyController;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
-import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.service.CompanyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -59,7 +58,7 @@ public class CompanyControllerUnitTests {
 
     @Test
     public void testFindCompanyById() throws Exception {
-        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK, Collections.emptySet());
+        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", "Semiconductors", Collections.emptySet());
 
         when(companyService.findById("NVDA")).thenReturn(nvidia);
 
@@ -68,13 +67,13 @@ public class CompanyControllerUnitTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo("Nvidia")))
                 .andExpect(jsonPath("$.sector", equalTo("Information Technology")))
-                .andExpect(jsonPath("$.equityType", equalTo("COMMON_STOCK")));
+                .andExpect(jsonPath("$.industry", equalTo("Semiconductors")));
     }
 
     @Test
     public void testSaveCompany() throws Exception {
-        Company nvidia = new Company("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK, Collections.emptySet());
-        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK,
+        Company nvidia = new Company("NVDA", "Nvidia", "IT", "Semiconductors", Collections.emptySet());
+        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors",
                 Set.of("SSE", "NYSE"));
 
         when(companyService.save(any())).thenReturn(nvidia);

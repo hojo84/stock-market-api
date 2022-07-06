@@ -25,6 +25,9 @@ public class Listing {
     @MapsId("companyId")
     private Company company;
 
+    @Enumerated(EnumType.STRING)
+    private EquityType equityType = EquityType.COMMON_STOCK;
+
     public Listing(Exchange exchange, Company company) {
         this.exchange = exchange;
         this.company = company;

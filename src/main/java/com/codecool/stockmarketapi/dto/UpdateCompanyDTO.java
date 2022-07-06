@@ -1,6 +1,5 @@
 package com.codecool.stockmarketapi.dto;
 
-import com.codecool.stockmarketapi.entity.EquityType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +25,7 @@ public class UpdateCompanyDTO {
     @NotBlank(message = "Sector must not be null or blank")
     private String sector;
 
-    @Schema(description = "types of equity are different forms of shares or ownership available in a company", example = "COMMON_STOCK")
-    @NotNull(message = "EquityType must not be null")
-    private EquityType equityType;
+    @Schema(description = "industry of the company", example = "Telecom Services")
+    @NotNull(message = "Industry must not be null")
+    private String industry;
 }

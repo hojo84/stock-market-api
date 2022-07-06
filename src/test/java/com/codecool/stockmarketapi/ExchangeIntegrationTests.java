@@ -3,7 +3,6 @@ package com.codecool.stockmarketapi;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
-import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -126,7 +125,7 @@ public class ExchangeIntegrationTests {
         postExchange(url, exchangeDTOs.get(0));
         String exchangeId = exchangeDTOs.get(0).getId();
 
-        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK,
+        CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors",
                 Set.of(exchangeId));
 
         testRestTemplate.postForObject("/companies", newCompany, Company.class);

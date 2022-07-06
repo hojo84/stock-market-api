@@ -28,8 +28,7 @@ public class Company {
 
     private String sector;
 
-    @Enumerated(EnumType.STRING)
-    private EquityType equityType;
+    private String industry;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.REMOVE)
     @JsonIgnore
@@ -39,14 +38,14 @@ public class Company {
         this.id = createCompanyDTO.getId();
         this.name = createCompanyDTO.getName();
         this.sector = createCompanyDTO.getSector();
-        this.equityType = createCompanyDTO.getEquityType();
+        this.industry = createCompanyDTO.getIndustry();
     }
 
     public Company(UpdateCompanyDTO updateCompanyDTO) {
         this.id = updateCompanyDTO.getId();
         this.name = updateCompanyDTO.getName();
         this.sector = updateCompanyDTO.getSector();
-        this.equityType = updateCompanyDTO.getEquityType();
+        this.industry = updateCompanyDTO.getIndustry();
     }
 
     @Override

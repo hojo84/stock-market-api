@@ -4,7 +4,6 @@ import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
-import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,7 @@ public class CompanyIntegrationTests {
         resetRepositories();
         url = "/companies";
         createCompanyDTOSs = List.of(
-                new CreateCompanyDTO("NVDA", "Nvidia", "IT", EquityType.COMMON_STOCK, Set.of("XNAS"))
+                new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors", Set.of("XNAS"))
         );
     }
 
@@ -66,7 +65,7 @@ public class CompanyIntegrationTests {
                 origCompany.getId(),
                 "Renamed Nvidia",
                 origCompany.getSector(),
-                origCompany.getEquityType()
+                origCompany.getIndustry()
         );
 
         testRestTemplate.put(url + "/" + updateCompanyDTO.getId(), updateCompanyDTO);

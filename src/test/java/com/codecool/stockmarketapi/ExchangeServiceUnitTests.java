@@ -2,7 +2,6 @@ package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Country;
-import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import com.codecool.stockmarketapi.service.ExchangeService;
@@ -24,13 +23,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class ExchangeServiceUnitTests {
 
+    private final Country hungary = new Country(1L, "Hungary");
+
     @MockBean
     private ExchangeRepository exchangeRepository;
 
     @Autowired
     private ExchangeService exchangeService;
-
-    private final Country hungary = new Country(1L, "Hungary");
 
     @Test
     void testReturnAllExchanges() {
@@ -53,8 +52,8 @@ public class ExchangeServiceUnitTests {
     @Test
     void testReturnAllCompaniesByExchangeId() {
         List<Company> expectedCompanies = List.of(
-                new Company("MOL", "MOL Nyrt", "Energy", EquityType.COMMON_STOCK, Collections.emptySet()),
-                new Company("OTP", "OTP Nyrt", "Financials", EquityType.COMMON_STOCK, Collections.emptySet())
+                new Company("MOL", "MOL Nyrt", "Energy", "Oil & Gas Integrated", Collections.emptySet()),
+                new Company("OTP", "OTP Nyrt", "Financials", "Banks", Collections.emptySet())
         );
         Exchange exchange = new Exchange("BUD",
                 "Budapest Stock Exchange",

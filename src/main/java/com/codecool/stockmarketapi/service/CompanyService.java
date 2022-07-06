@@ -19,7 +19,7 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final ExchangeRepository exchangeRepository;
-    private ListingRepository listingRepository;
+    private final ListingRepository listingRepository;
 
     @Autowired
     public CompanyService(CompanyRepository companyRepository, ExchangeRepository exchangeRepository, ListingRepository listingRepository) {
@@ -49,7 +49,7 @@ public class CompanyService {
         Company companyToBeUpdated = findById(updateCompanyDTO.getId());
         companyToBeUpdated.setName(updateCompanyDTO.getName());
         companyToBeUpdated.setSector(updateCompanyDTO.getSector());
-        companyToBeUpdated.setEquityType(updateCompanyDTO.getEquityType());
+        companyToBeUpdated.setIndustry(updateCompanyDTO.getIndustry());
         return companyRepository.save(companyToBeUpdated);
     }
 

@@ -2,7 +2,10 @@ package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.ExchangeController;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
-import com.codecool.stockmarketapi.entity.*;
+import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.Country;
+import com.codecool.stockmarketapi.entity.Exchange;
+import com.codecool.stockmarketapi.entity.Listing;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -103,9 +106,9 @@ public class ExchangeControllerUnitTests {
     public void testGetAllCompaniesByExchangeId() throws Exception {
         Exchange nasdaq = new Exchange("XNAS", "Nasdaq", "New York", "USD", "https://www.nasdaq.com",
                 unitedStates, new HashSet<>());
-        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", EquityType.COMMON_STOCK,
+        Company nvidia = new Company("NVDA", "Nvidia", "Information Technology", "Semiconductors",
                 new HashSet<>());
-        Company apple = new Company("AAPL", "Apple", "Information Technology", EquityType.COMMON_STOCK,
+        Company apple = new Company("AAPL", "Apple", "Information Technology", "Consumer Electronics",
                 new HashSet<>());
 
         nvidia.getExchanges().add(new Listing(nasdaq, nvidia));
