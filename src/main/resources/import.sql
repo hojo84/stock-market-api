@@ -25,3 +25,7 @@ insert into listings (exchange_id, company_id, equity_type) values ('XNAS', 'WDA
 insert into listings (exchange_id, company_id, equity_type) values ('BUD', 'OTP', 'COMMON_STOCK');
 insert into listings (exchange_id, company_id, equity_type) values ('BUD', 'MOL', 'COMMON_STOCK');
 insert into listings (exchange_id, company_id, equity_type) values ('LSE', 'OTP', 'COMMON_STOCK');
+
+insert into trading (id, price_close, price_high, price_low, price_open, trading_day, volume, company_id, exchange_id) values (1, 141.1, 145, 139.4, 142.4, '2022-07-04', 28788586, 'AAPL', 'XNAS');
+insert into trading (id, price_close, price_high, price_low, price_open, trading_day, volume, company_id, exchange_id) values (2, 141.35, 143.75, 141.28, 141.68, '2022-07-05', 73353800, 'AAPL', 'XNAS');
+insert into trading (id, price_close, price_high, price_low, price_open, trading_day, volume, company_id, exchange_id) values (3, 141.56, 141.61, 136.93, 137.77, '2022-07-06', 71007500, 'AAPL', 'XNAS');
