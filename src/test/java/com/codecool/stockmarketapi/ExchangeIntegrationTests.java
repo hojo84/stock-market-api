@@ -138,7 +138,6 @@ public class ExchangeIntegrationTests {
 
         assertThat(response.getName()).isEqualTo("Nvidia");
         assertThat(response.getSector()).isEqualTo("IT");
-        assertThat(response.getExchanges()).hasSize(1);
     }
 
     private Exchange postExchange(String url, ExchangeDTO exchangeDTO) {
