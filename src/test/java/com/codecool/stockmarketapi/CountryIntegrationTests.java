@@ -6,6 +6,7 @@ import com.codecool.stockmarketapi.entity.Country;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CountryRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
+import com.codecool.stockmarketapi.repository.TradingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class CountryIntegrationTests {
     @Autowired
     CountryRepository countryRepository;
 
+    @Autowired
+    TradingRepository tradingRepository;
+
     private String url;
     private CreateCountryDTO createCountryDTO = new CreateCountryDTO("United States");
     private ExchangeDTO exchangeDTO = new ExchangeDTO(
@@ -42,6 +46,7 @@ public class CountryIntegrationTests {
     }
 
     private void resetRepositories() {
+        tradingRepository.deleteAll();
         exchangeRepository.deleteAll();
         countryRepository.deleteAll();
     }

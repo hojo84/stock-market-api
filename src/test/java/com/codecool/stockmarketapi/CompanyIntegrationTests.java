@@ -6,6 +6,7 @@ import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
+import com.codecool.stockmarketapi.repository.TradingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class CompanyIntegrationTests {
     @Autowired
     CompanyRepository companyRepository;
 
+    @Autowired
+    TradingRepository tradingRepository;
+
     private String url;
     private List<CreateCompanyDTO> createCompanyDTOSs;
 
@@ -42,6 +46,7 @@ public class CompanyIntegrationTests {
     }
 
     private void resetRepositories() {
+        tradingRepository.deleteAll();
         exchangeRepository.deleteAll();
         companyRepository.deleteAll();
     }
