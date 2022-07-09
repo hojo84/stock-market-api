@@ -31,13 +31,18 @@ public class CreateCompanyDTO {
     @NotNull(message = "Industry must not be null")
     private String industry;
 
-    @Schema(description = "list of exchange ids where company is traded", example = """
+    @Schema(description = "a list of details for each listing for the given company", example = """
             [
-                    "SSE",
-                    "NYSE"
-                ]
+                         {
+                             "id": "VZ",
+                             "exchangeId": "NYSE",
+                             "companyId": "VZ",
+                             "equityType": "COMMON_STOCK",
+                             "ipo": "2002-04-05"
+                         }
+                     ]
             """)
-    @NotNull(message = "List of exchanges must not be null")
-    @Size(min = 1, message = "At least one exchange id must be provided")
+    @NotNull(message = "listings must not be null")
+    @Size(min = 1, message = "At least one listing must be provided")
     private Set<CreateListingDTO> listings;
 }
