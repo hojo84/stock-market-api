@@ -92,27 +92,4 @@ public class CompanyController {
     public void deleteById(@PathVariable("id") String id) {
         companyService.deleteById(id);
     }
-
-    @PutMapping("/{companyId}/listings/{exchangeId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Assigns company by id to given exchange")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
-    public void addCompanyToExchangeById(@PathVariable("companyId") String companyId,
-                                         @PathVariable("exchangeId") String exchangeId) {
-        companyService.addCompanyToExchangeById(companyId, exchangeId);
-    }
-
-    @DeleteMapping("/{companyId}/listings/{exchangeId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Removes company by id from given exchange")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Not found", content = @Content)})
-    public void removeCompanyFromExchangeById(@PathVariable("companyId") String companyId,
-                                              @PathVariable("exchangeId") String exchangeId) {
-        companyService.removeCompanyFromExchangeById(companyId, exchangeId);
-    }
-
 }

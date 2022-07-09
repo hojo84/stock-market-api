@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,24 +45,6 @@ public class Exchange {
         this.location = exchangeDTO.getLocation();
         this.currency = exchangeDTO.getCurrency();
         this.website = exchangeDTO.getWebsite();
-    }
-
-    public void addCompany(Company company) {
-        Listing listing = new Listing(this, company);
-        companies.add(listing);
-        company.getExchanges().add(listing);
-    }
-
-    public void removeCompany(Company company) {
-        for (Iterator<Listing> iterator = companies.iterator(); iterator.hasNext(); ) {
-            Listing listing = iterator.next();
-            if (listing.getExchange().equals(this) && listing.getCompany().equals(company)) {
-                iterator.remove();
-                listing.getCompany().getExchanges().remove(listing);
-                listing.setExchange(null);
-                listing.setCompany(null);
-            }
-        }
     }
 
     @Override

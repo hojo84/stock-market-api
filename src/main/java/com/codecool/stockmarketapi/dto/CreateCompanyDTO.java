@@ -39,5 +39,5 @@ public class CreateCompanyDTO {
             """)
     @NotNull(message = "List of exchanges must not be null")
     @Size(min = 1, message = "At least one exchange id must be provided")
-    private Set<String> exchangeIds;
+    private Set<CreateListingDTO> listings;
 }

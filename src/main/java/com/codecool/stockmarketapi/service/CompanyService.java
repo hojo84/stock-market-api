@@ -5,7 +5,7 @@ import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
-import com.codecool.stockmarketapi.entity.Exchange;
+import com.codecool.stockmarketapi.entity.Listing;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import com.codecool.stockmarketapi.repository.ListingRepository;
@@ -34,13 +34,16 @@ public class CompanyService {
 
     public Company save(CreateCompanyDTO createCompanyDTO) {
         Company newCompanySaved = companyRepository.save(new Company(createCompanyDTO));
-        final List<Exchange> exchangeList = createCompanyDTO.getExchangeIds().stream()
-                .map(exchangeId -> exchangeRepository.findById(exchangeId)
-                        .orElseThrow(() -> new ExchangeNotFoundException(exchangeId)))
-                .toList();
-        exchangeList.forEach(exchange -> {
-            exchange.addCompany(newCompanySaved);
-            exchangeRepository.save(exchange);
+        createCompanyDTO.getListings().forEach(createListingDTO -> {
+            Listing newListing = new Listing(
+                    createListingDTO.getId(),
+                    exchangeRepository.findById(createListingDTO.getExchangeId())
+                            .orElseThrow(() -> new ExchangeNotFoundException(createListingDTO.getExchangeId())),
+                    newCompanySaved,
+                    createListingDTO.getEquityType(),
+                    createListingDTO.getIpo()
+            );
+            listingRepository.save(newListing);
         });
         return newCompanySaved;
     }
@@ -61,20 +64,5 @@ public class CompanyService {
     public void deleteById(String id) {
         findById(id);
         companyRepository.deleteById(id);
-    }
-
-    public void addCompanyToExchangeById(String companyId, String exchangeId) {
-        Exchange exchange = exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
-        Company companyToBeAdded = findById(companyId);
-        exchange.addCompany(companyToBeAdded);
-        exchangeRepository.save(exchange);
-    }
-
-    public void removeCompanyFromExchangeById(String companyId, String exchangeId) {
-        exchangeRepository.findById(exchangeId)
-                .orElseThrow(() -> new ExchangeNotFoundException(exchangeId));
-        findById(companyId);
-        listingRepository.removeCompanyFromExchangeById(companyId, exchangeId);
     }
 }

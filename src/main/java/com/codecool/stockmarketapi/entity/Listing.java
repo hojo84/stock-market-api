@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -14,24 +15,28 @@ import java.util.Objects;
 @Table(name = "listings")
 public class Listing {
 
-    @EmbeddedId
-    private ListingId id;
+    @Id
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("exchangeId")
+    @JoinColumn(name = "exchange_id", foreignKey = @ForeignKey(name = "fk_listings_exchanges"))
     private Exchange exchange;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("companyId")
+    @JoinColumn(name = "company_id", foreignKey = @ForeignKey(name = "fk_listings_companies"))
     private Company company;
 
     @Enumerated(EnumType.STRING)
     private EquityType equityType = EquityType.COMMON_STOCK;
 
-    public Listing(Exchange exchange, Company company) {
+    private LocalDate ipo;
+
+    public Listing(String id, Exchange exchange, Company company, EquityType equityType, LocalDate ipo) {
+        this.id = id;
         this.exchange = exchange;
         this.company = company;
-        this.id = new ListingId(exchange.getId(), company.getId());
+        this.equityType = equityType;
+        this.ipo = ipo;
     }
 
     @Override
@@ -39,11 +44,11 @@ public class Listing {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing that = (Listing) o;
-        return Objects.equals(exchange, that.exchange) && Objects.equals(company, that.company);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(exchange, company);
+        return Objects.hash(id);
     }
 }

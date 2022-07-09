@@ -21,10 +21,7 @@ public class Trading {
     private Long id;
 
     @ManyToOne
-    @JoinColumns(value = {
-            @JoinColumn(name = "exchange_id", referencedColumnName = "exchange_id"),
-            @JoinColumn(name = "company_id", referencedColumnName = "company_id")
-    }, foreignKey = @ForeignKey(name = "fk_trading_listings"))
+    @JoinColumn(name = "listing_id", foreignKey = @ForeignKey(name = "fk_trading_listings"))
     private Listing listing;
 
     private LocalDate tradingDay;
