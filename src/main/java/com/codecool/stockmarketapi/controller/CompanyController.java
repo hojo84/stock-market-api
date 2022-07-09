@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.controller;
 
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
+import com.codecool.stockmarketapi.dto.CreateListingDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.service.CompanyService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/companies")
@@ -48,7 +50,11 @@ public class CompanyController {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Company.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     public ResponseEntity<Company> save(@Valid @RequestBody CreateCompanyDTO createCompanyDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+        final Predicate<String> testIdEquality = id -> id.equals(createCompanyDTO.getId());
+        if (bindingResult.hasErrors() ||
+                !createCompanyDTO.getListings().stream()
+                        .map(CreateListingDTO::getCompanyId)
+                        .allMatch(testIdEquality)) {
             logger.error("INVALID COMPANY INPUT");
             bindingResult.getAllErrors().forEach(e -> logger.error(e.getDefaultMessage()));
             return ResponseEntity.badRequest().build();
