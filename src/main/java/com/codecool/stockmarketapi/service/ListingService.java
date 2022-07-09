@@ -2,6 +2,7 @@ package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.customexception.CompanyNotFoundException;
 import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
+import com.codecool.stockmarketapi.customexception.ListingNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateListingDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
@@ -40,7 +41,12 @@ public class ListingService {
     }
 
     public void removeCompanyFromExchangeById(String id) {
-        listingRepository.findById(id);
+        findById(id);
         listingRepository.deleteById(id);
+    }
+
+    public Listing findById(String id) {
+        return listingRepository.findById(id)
+                .orElseThrow(() -> new ListingNotFoundException(id));
     }
 }
