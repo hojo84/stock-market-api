@@ -2,7 +2,9 @@ package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.CompanyController;
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
+import com.codecool.stockmarketapi.dto.CreateListingDTO;
 import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.service.CompanyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +77,7 @@ public class CompanyControllerUnitTests {
     public void testSaveCompany() throws Exception {
         Company nvidia = new Company("NVDA", "Nvidia", "IT", "Semiconductors", Collections.emptySet());
         CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors",
-                Set.of("SSE", "NYSE"));
+                Set.of(new CreateListingDTO("NVDA", "NYSE", "NVDA", EquityType.COMMON_STOCK, LocalDate.now())));
 
         when(companyService.save(any())).thenReturn(nvidia);
 
@@ -91,26 +94,6 @@ public class CompanyControllerUnitTests {
         String id = "NVDA";
         doNothing().when(companyService).deleteById(id);
         mockMvc.perform(delete("/companies/{id}", id))
-                .andExpect(status().isNoContent())
-                .andDo(print());
-    }
-
-    @Test
-    public void testAddCompanyToExchange() throws Exception {
-        String companyId = "NVDA";
-        String exchangeId = "NYSE";
-        doNothing().when(companyService).addCompanyToExchangeById(companyId, exchangeId);
-        mockMvc.perform(put("/companies/{companyId}/listings/{exchangeId}", companyId, exchangeId))
-                .andExpect(status().isNoContent())
-                .andDo(print());
-    }
-
-    @Test
-    public void testRemoveCompanyFromExchange() throws Exception {
-        String companyId = "NVDA";
-        String exchangeId = "NYSE";
-        doNothing().when(companyService).removeCompanyFromExchangeById(companyId, exchangeId);
-        mockMvc.perform(delete("/companies/{companyId}/listings/{exchangeId}", companyId, exchangeId))
                 .andExpect(status().isNoContent())
                 .andDo(print());
     }

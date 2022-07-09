@@ -1,8 +1,10 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
+import com.codecool.stockmarketapi.dto.CreateListingDTO;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -131,7 +134,7 @@ public class ExchangeIntegrationTests {
         String exchangeId = exchangeDTOs.get(0).getId();
 
         CreateCompanyDTO newCompany = new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors",
-                Set.of(exchangeId));
+                Set.of(new CreateListingDTO("NVDA", exchangeId, "NVDA", EquityType.COMMON_STOCK, LocalDate.now())));
 
         testRestTemplate.postForObject("/companies", newCompany, Company.class);
 

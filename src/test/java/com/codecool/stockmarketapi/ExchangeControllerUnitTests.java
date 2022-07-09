@@ -2,10 +2,7 @@ package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.ExchangeController;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
-import com.codecool.stockmarketapi.entity.Company;
-import com.codecool.stockmarketapi.entity.Country;
-import com.codecool.stockmarketapi.entity.Exchange;
-import com.codecool.stockmarketapi.entity.Listing;
+import com.codecool.stockmarketapi.entity.*;
 import com.codecool.stockmarketapi.service.ExchangeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -15,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -111,8 +109,8 @@ public class ExchangeControllerUnitTests {
         Company apple = new Company("AAPL", "Apple", "Information Technology", "Consumer Electronics",
                 new HashSet<>());
 
-        nvidia.getExchanges().add(new Listing(nasdaq, nvidia));
-        apple.getExchanges().add(new Listing(nasdaq, apple));
+        nvidia.getExchanges().add(new Listing("NVDA", nasdaq, nvidia, EquityType.COMMON_STOCK, LocalDate.now()));
+        apple.getExchanges().add(new Listing("AAPL", nasdaq, apple, EquityType.COMMON_STOCK, LocalDate.now()));
 
         List<Company> expectedCompanies = List.of(nvidia, apple);
         String exchangeId = "XNAS";

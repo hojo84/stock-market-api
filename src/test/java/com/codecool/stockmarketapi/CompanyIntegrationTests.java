@@ -1,9 +1,11 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.dto.CreateCompanyDTO;
+import com.codecool.stockmarketapi.dto.CreateListingDTO;
 import com.codecool.stockmarketapi.dto.ExchangeDTO;
 import com.codecool.stockmarketapi.dto.UpdateCompanyDTO;
 import com.codecool.stockmarketapi.entity.Company;
+import com.codecool.stockmarketapi.entity.EquityType;
 import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import com.codecool.stockmarketapi.repository.TradingRepository;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -41,7 +44,21 @@ public class CompanyIntegrationTests {
         resetRepositories();
         url = "/companies";
         createCompanyDTOSs = List.of(
-                new CreateCompanyDTO("NVDA", "Nvidia", "IT", "Semiconductors", Set.of("XNAS"))
+                new CreateCompanyDTO(
+                        "NVDA",
+                        "Nvidia",
+                        "IT",
+                        "Semiconductors",
+                        Set.of(
+                                new CreateListingDTO(
+                                        "NVDA",
+                                        "XNAS",
+                                        "NVDA",
+                                        EquityType.COMMON_STOCK,
+                                        LocalDate.now()
+                                )
+                        )
+                )
         );
     }
 
