@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.controller;
 
 import com.codecool.stockmarketapi.dto.CreateTradeDTO;
+import com.codecool.stockmarketapi.dto.TradeDTO;
 import com.codecool.stockmarketapi.entity.Trading;
 import com.codecool.stockmarketapi.service.TradingService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class TradingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Trading save(@RequestBody CreateTradeDTO createTradeDTO) {
+    public TradeDTO save(@RequestBody CreateTradeDTO createTradeDTO) {
         return tradingService.save(createTradeDTO);
     }
 
