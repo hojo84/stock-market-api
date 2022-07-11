@@ -2,7 +2,6 @@ package com.codecool.stockmarketapi.controller;
 
 import com.codecool.stockmarketapi.dto.CreateTradeDTO;
 import com.codecool.stockmarketapi.dto.TradeDTO;
-import com.codecool.stockmarketapi.entity.Trading;
 import com.codecool.stockmarketapi.service.TradingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class TradingController {
     }
 
     @GetMapping
-    public List<Trading> listAll(@RequestParam(name = "ticker", required = false) Optional<String> listingId) {
+    public List<TradeDTO> listAll(@RequestParam(name = "ticker", required = false) Optional<String> listingId) {
         return tradingService.listAll(listingId);
     }
 }

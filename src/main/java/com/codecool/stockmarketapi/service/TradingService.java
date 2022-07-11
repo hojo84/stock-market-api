@@ -34,10 +34,10 @@ public class TradingService {
         return tradingMapper.toDto(tradingRepository.save(newTrading));
     }
 
-    public List<Trading> listAll(Optional<String> listingId) {
+    public List<TradeDTO> listAll(Optional<String> listingId) {
         if (listingId.isPresent() && !listingId.get().isBlank())
-            return tradingRepository.findAllByListingId(listingId.get());
+            return tradingMapper.toDto(tradingRepository.findAllByListingId(listingId.get()));
         else
-            return tradingRepository.findAll();
+            return tradingMapper.toDto(tradingRepository.findAll());
     }
 }
