@@ -10,6 +10,7 @@ import com.codecool.stockmarketapi.repository.ListingRepository;
 import com.codecool.stockmarketapi.repository.TradingRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,9 @@ public class TradingService {
             return tradingMapper.toDto(tradingRepository.findAllByListingId(listingId.get()));
         else
             return tradingMapper.toDto(tradingRepository.findAll());
+    }
+
+    public List<TradeDTO> listBetweenDateRange(LocalDate from, LocalDate to) {
+        return tradingMapper.toDto(tradingRepository.listBetweenDateRange(from, to));
     }
 }
