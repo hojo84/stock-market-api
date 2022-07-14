@@ -16,4 +16,7 @@ public interface TradingRepository extends JpaRepository<Trading, Long> {
 
     @Query("select t from Trading t where t.tradingDay>=:from and t.tradingDay<=:to")
     List<Trading> listBetweenDateRange(LocalDate from, LocalDate to);
+
+    @Query("select t from Trading t where t.listing.id=:listingId and t.tradingDay=:tradingDay")
+    Trading getTradeByListingIdAndDate(String listingId, LocalDate tradingDay);
 }

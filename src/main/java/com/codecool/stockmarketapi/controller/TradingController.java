@@ -37,4 +37,10 @@ public class TradingController {
                                                @PathVariable("to") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to) {
         return tradingService.listBetweenDateRange(from, to);
     }
+
+    @GetMapping("/{stockTicker}/{date}")
+    public TradeDTO getTradeByListingIdAndDate(@PathVariable("stockTicker") String listingId,
+                                               @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tradingDay) {
+        return tradingService.getTradeByListingIdAndDate(listingId, tradingDay);
+    }
 }

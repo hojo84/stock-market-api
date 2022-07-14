@@ -45,4 +45,8 @@ public class TradingService {
     public List<TradeDTO> listBetweenDateRange(LocalDate from, LocalDate to) {
         return tradingMapper.toDto(tradingRepository.listBetweenDateRange(from, to));
     }
+
+    public TradeDTO getTradeByListingIdAndDate(String listingId, LocalDate tradingDay) {
+        return tradingMapper.toDto(tradingRepository.getTradeByListingIdAndDate(listingId, tradingDay));
+    }
 }
