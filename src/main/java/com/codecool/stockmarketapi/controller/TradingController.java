@@ -43,4 +43,9 @@ public class TradingController {
                                                @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate tradingDay) {
         return tradingService.getTradeByListingIdAndDate(listingId, tradingDay);
     }
+
+    @GetMapping("/prev/{stockTicker}")
+    public TradeDTO getTradeForPrevTradingDay(@PathVariable("stockTicker") String listingId) {
+        return tradingService.getTradeForPrevTradingDay(listingId);
+    }
 }

@@ -8,6 +8,8 @@ import com.codecool.stockmarketapi.entity.Trading;
 import com.codecool.stockmarketapi.mapper.TradingMapper;
 import com.codecool.stockmarketapi.repository.ListingRepository;
 import com.codecool.stockmarketapi.repository.TradingRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,5 +50,11 @@ public class TradingService {
 
     public TradeDTO getTradeByListingIdAndDate(String listingId, LocalDate tradingDay) {
         return tradingMapper.toDto(tradingRepository.getTradeByListingIdAndDate(listingId, tradingDay));
+    }
+
+    public TradeDTO getTradeForPrevTradingDay(String listingId) {
+        Pageable topOne = PageRequest.of(0, 1);
+        final Optional<Trading> prevTradingData = tradingRepository.findByListingIdOrderByTradingDayDesc(listingId, topOne).stream().findFirst();
+        return tradingMapper.toDto(prevTradingData.get());
     }
 }
