@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi.service;
 
 import com.codecool.stockmarketapi.customexception.ListingNotFoundException;
+import com.codecool.stockmarketapi.customexception.TradingNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateTradeDTO;
 import com.codecool.stockmarketapi.dto.TradeDTO;
 import com.codecool.stockmarketapi.entity.Listing;
@@ -51,7 +52,8 @@ public class TradingService {
     }
 
     public TradeDTO getTradeForPrevTradingDay(String listingId) {
-        final Optional<Trading> prevTradingData = tradingRepository.findFirstByListingIdOrderByTradingDayDesc(listingId);
-        return tradingMapper.toDto(prevTradingData.get());
+        final Trading prevTradingData = tradingRepository.findFirstByListingIdOrderByTradingDayDesc(listingId)
+                .orElseThrow(() -> new TradingNotFoundException(listingId));
+        return tradingMapper.toDto(prevTradingData);
     }
 }
