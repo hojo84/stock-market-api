@@ -35,7 +35,7 @@ public class ListingService {
                 exchange,
                 companyToBeAdded,
                 createListingDTO.getEquityType(),
-                createListingDTO.getIpo()
+                createListingDTO.getIpoDate()
         );
         listingRepository.save(newListing);
     }

@@ -41,7 +41,7 @@ public class CompanyService {
                             .orElseThrow(() -> new ExchangeNotFoundException(createListingDTO.getExchangeId())),
                     newCompanySaved,
                     createListingDTO.getEquityType(),
-                    createListingDTO.getIpo()
+                    createListingDTO.getIpoDate()
             );
             listingRepository.save(newListing);
         });

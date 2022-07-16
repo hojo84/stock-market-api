@@ -26,5 +26,5 @@ public class CreateListingDTO {
     private EquityType equityType;
 
     @Schema(description = "date of Initial Public Offering", example = "2022-03-05")
-    private LocalDate ipo;
+    private LocalDate ipoDate;
 }

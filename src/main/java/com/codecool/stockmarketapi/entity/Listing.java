@@ -29,14 +29,14 @@ public class Listing {
     @Enumerated(EnumType.STRING)
     private EquityType equityType = EquityType.COMMON_STOCK;
 
-    private LocalDate ipo;
+    private LocalDate ipoDate;
 
-    public Listing(String id, Exchange exchange, Company company, EquityType equityType, LocalDate ipo) {
+    public Listing(String id, Exchange exchange, Company company, EquityType equityType, LocalDate ipoDate) {
         this.id = id;
         this.exchange = exchange;
         this.company = company;
         this.equityType = equityType;
-        this.ipo = ipo;
+        this.ipoDate = ipoDate;
     }
 
     @Override
