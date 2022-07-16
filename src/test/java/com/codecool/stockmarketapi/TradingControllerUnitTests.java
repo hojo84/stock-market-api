@@ -1,6 +1,7 @@
 package com.codecool.stockmarketapi;
 
 import com.codecool.stockmarketapi.controller.TradingController;
+import com.codecool.stockmarketapi.customexception.TradingNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateTradeDTO;
 import com.codecool.stockmarketapi.dto.TradeDTO;
 import com.codecool.stockmarketapi.service.TradingService;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -148,5 +149,18 @@ public class TradingControllerUnitTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.ticker", equalTo("AAPL")))
                 .andExpect(jsonPath("$.tradingDay", equalTo("2022-07-15")));
+    }
+
+    @Test
+    void testGetTradeForPrevTradingDayNotFound() throws Exception {
+        String stockTicker = "VZ";
+
+        when(tradingService.getTradeForPrevTradingDay(stockTicker)).thenThrow(new TradingNotFoundException(stockTicker));
+
+        mockMvc.perform(get(url + "/" + stockTicker))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+        verify(tradingService, never()).getTradeForPrevTradingDay(anyString());
     }
 }
