@@ -117,4 +117,22 @@ public class TradingControllerUnitTests {
                 .andExpect(jsonPath("$.[0].ticker", equalTo("NVDA")))
                 .andExpect(jsonPath("$.[1].ticker", equalTo("AAPL")));
     }
+
+    @Test
+    void testListBetweenDateRange() throws Exception {
+        LocalDate from = LocalDate.of(2022, 7, 8);
+        LocalDate to = LocalDate.of(2022, 7, 15);
+
+        when(tradingService.listBetweenDateRange(from, to)).thenReturn(expectedTradingData);
+
+        String dateFrom = "2022-07-08";
+        String dateTo = "2022-07-15";
+
+        mockMvc.perform(get(url + "/range/" + dateFrom + "/" + dateTo))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", equalTo(2)))
+                .andExpect(jsonPath("$.[0].ticker", equalTo("NVDA")))
+                .andExpect(jsonPath("$.[1].ticker", equalTo("AAPL")));
+    }
 }
