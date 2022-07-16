@@ -135,4 +135,18 @@ public class TradingControllerUnitTests {
                 .andExpect(jsonPath("$.[0].ticker", equalTo("NVDA")))
                 .andExpect(jsonPath("$.[1].ticker", equalTo("AAPL")));
     }
+
+    @Test
+    void testGetTradeByListingIdAndDate() throws Exception {
+        LocalDate tradingDay = LocalDate.of(2022, 7, 15);
+        String stockTicker = "AAPL";
+
+        when(tradingService.getTradeByListingIdAndDate(stockTicker, tradingDay)).thenReturn(expectedTradingData.get(1));
+
+        mockMvc.perform(get(url + "/" + stockTicker + "/" + tradingDay))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ticker", equalTo("AAPL")))
+                .andExpect(jsonPath("$.tradingDay", equalTo("2022-07-15")));
+    }
 }
