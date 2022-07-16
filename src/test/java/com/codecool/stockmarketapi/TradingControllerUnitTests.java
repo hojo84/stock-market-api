@@ -5,6 +5,7 @@ import com.codecool.stockmarketapi.dto.CreateTradeDTO;
 import com.codecool.stockmarketapi.dto.TradeDTO;
 import com.codecool.stockmarketapi.service.TradingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,10 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,28 +40,60 @@ public class TradingControllerUnitTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private List<CreateTradeDTO> listOfTradingDataToBeSaved;
+    private List<TradeDTO> expectedTradingData;
+
+    @BeforeEach
+    void setUp() {
+        listOfTradingDataToBeSaved = List.of(
+                new CreateTradeDTO(
+                        "NVDA",
+                        LocalDate.of(2022, 7, 8),
+                        154.30f,
+                        160.37f,
+                        153.89f,
+                        158.38f,
+                        46763500
+                ),
+                new CreateTradeDTO(
+                        "NVDA",
+                        LocalDate.of(2022, 7, 15),
+                        156.59f,
+                        157.82f,
+                        154.45f,
+                        157.62f,
+                        38447100
+                )
+        );
+        expectedTradingData = List.of(
+                new TradeDTO(
+                        1L,
+                        "NVDA",
+                        LocalDate.of(2022, 7, 8),
+                        154.30f,
+                        160.37f,
+                        153.89f,
+                        158.38f,
+                        46763500
+                ),
+                new TradeDTO(
+                        2L,
+                        "AAPL",
+                        LocalDate.of(2022, 7, 15),
+                        156.59f,
+                        157.82f,
+                        154.45f,
+                        157.62f,
+                        38447100
+                )
+        );
+    }
+
     @Test
     void testSaveTrading() throws Exception {
-        CreateTradeDTO newTradingData = new CreateTradeDTO(
-                "NVDA",
-                LocalDate.of(2022, 7, 8),
-                154.30f,
-                160.37f,
-                153.89f,
-                158.38f,
-                46763500
-        );
+        CreateTradeDTO newTradingData = listOfTradingDataToBeSaved.get(0);
 
-        TradeDTO expected = new TradeDTO(
-                1L,
-                "NVDA",
-                LocalDate.of(2022, 7, 8),
-                154.30f,
-                160.37f,
-                153.89f,
-                158.38f,
-                46763500
-        );
+        TradeDTO expected = expectedTradingData.get(0);
 
         when(tradingService.save(any(CreateTradeDTO.class))).thenReturn(expected);
 
@@ -68,5 +104,17 @@ public class TradingControllerUnitTests {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.ticker", equalTo("NVDA")))
                 .andExpect(jsonPath("$.priceClose", equalTo(158.38)));
+    }
+
+    @Test
+    void testListAll() throws Exception {
+        when(tradingService.listAll(Optional.empty())).thenReturn(expectedTradingData);
+
+        mockMvc.perform(get(url))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", equalTo(2)))
+                .andExpect(jsonPath("$.[0].ticker", equalTo("NVDA")))
+                .andExpect(jsonPath("$.[1].ticker", equalTo("AAPL")));
     }
 }
