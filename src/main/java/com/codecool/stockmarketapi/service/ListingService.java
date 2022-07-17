@@ -4,6 +4,7 @@ import com.codecool.stockmarketapi.customexception.CompanyNotFoundException;
 import com.codecool.stockmarketapi.customexception.ExchangeNotFoundException;
 import com.codecool.stockmarketapi.customexception.ListingNotFoundException;
 import com.codecool.stockmarketapi.dto.CreateListingDTO;
+import com.codecool.stockmarketapi.dto.ListingDTO;
 import com.codecool.stockmarketapi.entity.Company;
 import com.codecool.stockmarketapi.entity.Exchange;
 import com.codecool.stockmarketapi.entity.Listing;
@@ -11,6 +12,8 @@ import com.codecool.stockmarketapi.repository.CompanyRepository;
 import com.codecool.stockmarketapi.repository.ExchangeRepository;
 import com.codecool.stockmarketapi.repository.ListingRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ListingService {
@@ -48,5 +51,9 @@ public class ListingService {
     public Listing findById(String id) {
         return listingRepository.findById(id)
                 .orElseThrow(() -> new ListingNotFoundException(id));
+    }
+
+    public List<ListingDTO> getListingsByCompanyId(String companyId) {
+        return listingRepository.getListingsByCompanyId(companyId);
     }
 }
