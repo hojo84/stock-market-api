@@ -54,6 +54,10 @@ public class ListingService {
     }
 
     public List<ListingDTO> getListingsByCompanyId(String companyId) {
-        return listingRepository.getListingsByCompanyId(companyId);
+        final List<ListingDTO> listingsByCompanyId = listingRepository.getListingsByCompanyId(companyId);
+        if (listingsByCompanyId.size() == 0) {
+            throw new ListingNotFoundException(companyId);
+        }
+        return listingsByCompanyId;
     }
 }
